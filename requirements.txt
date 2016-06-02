@@ -1,0 +1,3 @@
+bootstrap-admin==0.3.6
+Django==1.9.6
+django-bootstrap3==7.0.1
