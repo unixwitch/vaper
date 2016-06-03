@@ -1,0 +1,47 @@
+{% extends "vaper/base.html" %}
+{% load bootstrap3 %}
+
+{% block breadcrumbs %}
+  {{ block.super }}
+  <li>Recipes</li>
+  <li>{{ recipe.name }}</li>
+{% endblock %}
+
+{% block content %}
+<h1>
+  {{ recipe.name }}
+  {% if perms.recipe.change_recipe %}
+    <a href="{% url 'admin:vaper_recipe_change' recipe.id %}">
+      <button class='btn btn-default'>
+        {% bootstrap_icon 'edit' %}
+      </button>
+    </a>
+  {% endif %}
+  {% if perms.recipe.delete_recipe %}
+    <a href="{% url 'admin:vaper_recipe_delete' recipe.id %}">
+      <button class='btn btn-default'>
+        {% bootstrap_icon 'trash' %}
+      </button>
+    </a>
+  {% endif %}
+</h1>
+
+<h3>Description</h3>
+
+<p>
+  {% if recipe.description %}
+    {{ recipe.description }}
+  {% else %}
+    No description.  Sorry!
+  {% endif %}
+</p>
+
+<h3>Ingredients</h3>
+
+<ul>
+  {% for flavour in recipe.flavours.all %}
+    <li>{{ flavour }}</li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

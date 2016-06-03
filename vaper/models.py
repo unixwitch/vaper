@@ -13,27 +13,37 @@ from django.contrib import admin
 
 class Manufacturer(models.Model):
     name = models.CharField(max_length = 64)
-    
+
+#    flavours = models.ForeignKey(
+#        'Flavour',
+#        on_delete = models.CASCADE,
+#        related_name = 'manufacturer',
+#    )
+
     def __str__(self):
         return self.name
+
+class ManufacturerInline(admin.TabularInline):
+    model = Manufacturer
 
 class ManufacturerAdmin(admin.ModelAdmin):
     model = Manufacturer
 admin.site.register(Manufacturer, ManufacturerAdmin)
 
 class Flavour(models.Model):
+    name = models.CharField(max_length = 64)
     manufacturer = models.OneToOneField(
         Manufacturer,
         on_delete = models.CASCADE,
     )
 
-    flavour = models.CharField(max_length = 64)
-
     def __str__(self):
-        return "{} ({})".format(self.flavour, self.manufacturer)
+        return "{} ({})".format(self.name, self.manufacturer)
 
 class FlavourAdmin(admin.ModelAdmin):
     model = Flavour
+#    inlines = [ ManufacturerInline ]
+
 admin.site.register(Flavour, FlavourAdmin)
 
 ###
@@ -58,7 +68,9 @@ class FlavourInstance(models.Model):
 
     recipes = models.ForeignKey(
         'Recipe',
-        on_delete = models.CASCADE,
+        on_delete = models.SET_NULL,
+        related_name = 'flavours',
+        null = True,
     )
 
     def __str__(self):
@@ -66,6 +78,7 @@ class FlavourInstance(models.Model):
 
 class FlavourInstanceInline(admin.TabularInline):
     model = FlavourInstance
+    extra = 1
 
 ###
 ### RECIPE
@@ -76,6 +89,11 @@ class FlavourInstanceInline(admin.TabularInline):
 
 class Recipe(models.Model):
     name = models.CharField(max_length = 64)
+
+    description = models.TextField(
+        null = True,
+    )
+
     def __str__(self):
         return self.name
 

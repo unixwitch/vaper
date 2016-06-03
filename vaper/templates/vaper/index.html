@@ -1,0 +1,53 @@
+{# vim:set sw=2 ts=2 et: #}
+{% extends "vaper/base.html" %}
+{% load bootstrap3 %}
+
+{% block content %}
+<p>
+Welcome to Vaper.  <strong>This is a private site</strong>.  Do not share your 
+access details with anyone else.
+</p>
+
+<h2>
+  Recipes
+  {% if perms.recipe.add_recipe %}
+    <a href="{% url 'admin:vaper_recipe_add' %}">
+      <button class='btn btn-default'>
+        {% bootstrap_icon 'plus' %}
+      </button>
+    </a>
+  {% endif %}
+</h2>
+
+{% if recipes %}
+  <ul>
+    {% for recipe in recipes %}
+      <li><a href="{% url 'vaper:recipe' id=recipe.id %}">{{ recipe.name }}</a></li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>Sorry, no recipes have been added yet.</p>
+{% endif %}
+
+<h2>
+  Flavours
+  {% if perms.flavour.add_flavour %}
+    <a href="{% url 'admin:vaper_flavour_add' %}">
+      <button class='btn btn-default'>
+        {% bootstrap_icon 'plus' %}
+      </button>
+    </a>
+  {% endif %}
+</h2>
+
+{% if flavours %}
+  <ul>
+    {% for flavour in flavours %}
+      <li><a href="{% url 'vaper:flavour' id=flavour.id %}">{{ flavour.name }}</a></li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>Sorry, no flavours have been added yet.</p>
+{% endif %}
+
+{% endblock %}
