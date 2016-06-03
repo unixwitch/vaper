@@ -110,3 +110,6 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
 ]
+
+DEFAULT_FROM_EMAIL = 'vaper@willow.uk.le-Fay.ORG'
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
