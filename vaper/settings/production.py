@@ -14,8 +14,6 @@ ADMINS = (
     ( 'Felicity Tarnell', 'ft@le-fay.org' ),
 )
 
-COMPRESS_OFFLINE = True
-
 try:
     from .local import *
 except ImportError:
