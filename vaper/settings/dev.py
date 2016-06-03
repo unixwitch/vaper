@@ -4,4 +4,7 @@ DEBUG = True
 
 SECRET_KEY = 'change this in production'
 
-from .local import *
+try:
+    from .local import *
+except ImportError:
+    pass
