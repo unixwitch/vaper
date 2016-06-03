@@ -9,7 +9,7 @@
 
 {% block content %}
 <h1>
-  {{ recipe.name }}
+  Recipe: {{ recipe.name }} 
   {% if perms.recipe.change_recipe %}
     <a href="{% url 'admin:vaper_recipe_change' recipe.id %}">
       <button class='btn btn-default'>
@@ -32,15 +32,19 @@
   {% if recipe.description %}
     {{ recipe.description }}
   {% else %}
-    No description.  Sorry!
+    There's no description for this recipe, sorry!  It's probably tasty, though.
   {% endif %}
 </p>
 
 <h3>Ingredients</h3>
 
 <ul>
-  {% for flavour in recipe.flavours.all %}
-    <li>{{ flavour }}</li>
+  {% for flavour in recipe.flavour_instances.all %}
+    <li>
+      <a href="{% url 'vaper:flavour' flavour.flavour.id %}">{{ flavour.flavour }}</a>{% if user.is_staff %},
+        {{ flavour.strength }}%
+      {% endif %}
+    </li>
   {% endfor %}
 </ul>
 

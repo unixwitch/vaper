@@ -14,12 +14,6 @@ from django.contrib import admin
 class Manufacturer(models.Model):
     name = models.CharField(max_length = 64)
 
-#    flavours = models.ForeignKey(
-#        'Flavour',
-#        on_delete = models.CASCADE,
-#        related_name = 'manufacturer',
-#    )
-
     def __str__(self):
         return self.name
 
@@ -28,57 +22,27 @@ class ManufacturerInline(admin.TabularInline):
 
 class ManufacturerAdmin(admin.ModelAdmin):
     model = Manufacturer
+
 admin.site.register(Manufacturer, ManufacturerAdmin)
 
 class Flavour(models.Model):
     name = models.CharField(max_length = 64)
-    manufacturer = models.OneToOneField(
+    manufacturer = models.ForeignKey(
         Manufacturer,
         on_delete = models.CASCADE,
+        related_name = 'flavours',
     )
 
     def __str__(self):
         return "{} ({})".format(self.name, self.manufacturer)
 
+class FlavourInline(admin.TabularInline):
+    model = Flavour
+
 class FlavourAdmin(admin.ModelAdmin):
     model = Flavour
-#    inlines = [ ManufacturerInline ]
 
 admin.site.register(Flavour, FlavourAdmin)
-
-###
-### FLAVOUR INSTANCE
-###
-#
-# A (flavour, strength) pair, used in recipes.
-#
-
-class FlavourInstance(models.Model):
-    flavour = models.OneToOneField(
-        Flavour,
-        on_delete = models.CASCADE,
-    )
-
-    strength = models.IntegerField(
-		validators = [
-            MinValueValidator(0),
-            MaxValueValidator(100)
-        ],
-    )
-
-    recipes = models.ForeignKey(
-        'Recipe',
-        on_delete = models.SET_NULL,
-        related_name = 'flavours',
-        null = True,
-    )
-
-    def __str__(self):
-        return "{}, {}%".format(self.flavour, self.strength)
-
-class FlavourInstanceInline(admin.TabularInline):
-    model = FlavourInstance
-    extra = 1
 
 ###
 ### RECIPE
@@ -92,13 +56,53 @@ class Recipe(models.Model):
 
     description = models.TextField(
         null = True,
+		blank = True,
     )
 
     def __str__(self):
         return self.name
+
+
+###
+### FLAVOUR INSTANCE
+###
+#
+# A (flavour, strength) pair, used in recipes.
+#
+
+class FlavourInstance(models.Model):
+    class Meta:
+        verbose_name_plural = "Flavours"
+
+    flavour = models.ForeignKey(
+        Flavour,
+        on_delete = models.CASCADE,
+        related_name = 'flavour_instances'
+    )
+
+    strength = models.IntegerField(
+		validators = [
+            MinValueValidator(0),
+            MaxValueValidator(100)
+        ],
+    )
+
+    recipes = models.ForeignKey(
+        Recipe,
+        on_delete = models.CASCADE,
+        related_name = 'flavour_instances',
+    )
+
+    def __str__(self):
+        return "{}, {}%".format(self.flavour, self.strength)
+
+class FlavourInstanceInline(admin.TabularInline):
+    model = FlavourInstance
+    extra = 1
 
 class RecipeAdmin(admin.ModelAdmin):
     model = Recipe
     inlines = [ FlavourInstanceInline ]
 
 admin.site.register(Recipe, RecipeAdmin)
+

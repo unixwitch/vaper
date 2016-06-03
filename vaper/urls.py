@@ -6,7 +6,7 @@ import vaper.views
 
 app_name = 'vaper'
 
-vaper_urlpatterns = ([
+vaper_urlpatterns = [
     url(r'^$',                          vaper.views.index, name='index'),
     url(r'^recipe/(?P<id>[0-9]+)/$',    vaper.views.recipe, name='recipe'),
     url(r'^flavour/(?P<id>[0-9]+)/$',   vaper.views.flavour, name='flavour'),
@@ -16,9 +16,9 @@ vaper_urlpatterns = ([
     url(r'^logout/$',   logout, name='logout', kwargs = {
         'next_page': '/',
     }),
-], 'vaper')
+]
 
 urlpatterns = [
     url(r'^admin/',     admin.site.urls),
-    url(r'', include(vaper_urlpatterns)),
+    url(r'', include(vaper_urlpatterns, namespace='vaper')),
 ]

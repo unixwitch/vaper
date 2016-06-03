@@ -16,7 +16,13 @@ def index(request):
 
 @login_required
 def flavour(request, id):
-    pass
+    flavour = get_object_or_404(models.Flavour, id=id)
+    recipes = set([ r.recipes for r in flavour.flavour_instances.all() ])
+    
+    return render(request, 'vaper/flavour.html', {
+        'flavour': flavour,
+        'recipes': recipes,
+    })
 
 @login_required
 def recipe(request, id):
