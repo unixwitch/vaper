@@ -8,13 +8,32 @@ $(document).ready(function() {
   $("#mix-dialog").dialog({
     width: 650,
     autoOpen: false,
-    show: "slideDown",
-    hide: "slideUp",
+    //show: "slideDown",
+    //hide: "slideUp",
     modal: true,
     buttons: [
       {
-        text: "Mix",
+        text: "Update stock",
+        click: handle_mix_click,
+      },
+    ],
+  });
+
+  $("#stock-dialog").dialog({
+    width: 400,
+    autoOpen: false,
+    //show: "slideDown",
+    //hide: "slideUp",
+    modal: true,
+    buttons: [
+      {
+        text: "Update",
+        click: do_update_stock,
+      },
+      {
+        text: "Cancel",
         click: function() {
+          $(this).dialog("close");
         },
       },
     ],
@@ -23,6 +42,14 @@ $(document).ready(function() {
   $("#mix-button").on("click", function() {
     recalculate();
     $("#mix-dialog").dialog("open");
+  });
+
+  $("#updating-dialog").dialog({
+    width: 400,
+    autoOpen: false,
+    //show: "slideDown",
+    //hide: "slideUp",
+    modal: true,
   });
 
   /*
@@ -114,10 +141,17 @@ function recalculate(slider_value) {
   /*
    * Add flavours; assume all flavours come in PG.
    */
+  document.used_flavours = [];
+
   for (let f of document.flavours) {
     var f_ml = total_ml * (f.strength / 100.0);
     $('#mix-flavour-'+f.id+' td').html(f_ml + " ml");
     extra_pg += f_ml;
+
+    document.used_flavours.push({
+      id: f.id,
+      ml: f_ml,
+    });
   }
 
   actual_pg = (target_pg_ml - extra_pg);
@@ -172,4 +206,37 @@ function amount_button_click(event) {
   $('#amount-buttons button').removeClass('btn-primary').addClass('btn-default');
   $(event.target).addClass('btn-primary');
   recalculate();
+}
+
+/*
+ * Handle user clicking on 'mix' on the recipe.
+ */
+function handle_mix_click(event) {
+  $('#stock-dialog').dialog("open");
+}
+
+function do_update_stock_success(data, status, xhr) {
+  $('#updating-dialog').dialog("close");
+}
+
+function do_update_stock_error(xhr, status, error) {
+  $('#updating-dialog p').html('<strong>Error:</strong> '+error);
+}
+
+function do_update_stock(event) {
+  $('#stock-dialog').dialog('close');
+  $('#updating-dialog p').html('<strong>Sending update to server...</strong>');
+  $('#updating-dialog').dialog('open');
+  $.ajax('/api/stock/mix/', {
+    method: "POST",
+    error: do_update_stock_error,
+    success: do_update_stock_success,
+    headers: {
+      'X-CSRFToken': Cookies.get('csrftoken'),
+    },
+    data: {
+      stock: JSON.stringify(document.used_flavours),
+    },
+  });
+
 }

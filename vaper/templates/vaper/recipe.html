@@ -88,7 +88,7 @@
 <!--
   This is the mixing interface, which is displayed in a jquery-ui dialog.
 -->
-<div id="mix-dialog" title="Mix {{ recipe }}">
+<div id="mix-dialog" title="Mix {{ recipe }}" style='display: none'>
   <div class='text-center'>
     <div class='mix-dialog-label'>Target ratio</div>
 
@@ -170,6 +170,16 @@
     </table>
   </div>
 </div>
+
+<!-- UI for updating stock -->
+<div id='stock-dialog' title='Update stock?' style='display: none'>
+  <p>Are you sure you want to update the stock for this recipe?</p>
+</div>
+
+<div id='updating-dialog' title='Stock update' style='display: none'>
+  <p><strong>Please wait.<strong></p>
+</div>
+
 {% endif %}
 
 {% endblock %}

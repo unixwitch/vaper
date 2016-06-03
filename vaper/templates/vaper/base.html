@@ -1,6 +1,8 @@
 {# vim:set sw=2 ts=2 et: #}
 {% load staticfiles %}
 {% load compress %}
+{% load js %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +29,12 @@
   <script src="{% static 'admin/js/jquery.js' %}"></script>
   <script src="{% static 'vaper/js/bootstrap.min.js' %}"></script>
   <script src="{% static 'vaper/js/jquery-ui.min.js' %}"></script>
+  <script src="{% static 'vaper/js/js.cookie.js' %}"></script>
   {% endcompress %}
+
+  <script type='text/javascript'>
+    var csrf_token = "{% csrf_token %}";
+  </script>
 
   {% block head %}{% endblock %}
 </head>
