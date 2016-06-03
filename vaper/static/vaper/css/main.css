@@ -1,1 +1,49 @@
 /* vim:set sw=2 ts=2 et: */
+
+@font-face {
+  font-family: "Open Sans";
+  font-weight: 400;
+  font-style: normal;
+  src:  url('../fonts/opensans-regular.woff2') format("woff2"),
+        url('../fonts/opensans-regular.woff') format("woff"),
+        url('../fonts/opensans-regular.ttf') format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-weight: 300;
+  font-style: normal;
+  src:  url('../fonts/opensans-light.woff2') format("woff2"),
+        url('../fonts/opensans-light.woff') format("woff"),
+        url('../fonts/opensans-light.ttf') format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-weight: bold;
+  font-style: normal;
+  src:  url('../fonts/opensans-bold.woff2') format("woff2"),
+        url('../fonts/opensans-bold.woff') format("woff"),
+        url('../fonts/opensans-bold.ttf') format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  font-weight: 800;
+  font-style: normal;
+  src:  url('../fonts/opensans-extrabold.woff2') format("woff2"),
+        url('../fonts/opensans-extrabold.woff') format("woff"),
+        url('../fonts/opensans-extrabold.ttf') format("truetype");
+}
+
+body {
+  padding-top: 6em;
+}
+
+body, .ui-widget {
+  font-family: "Open Sans";
+}
+
+.navbar {
+  z-index: 1;
+}

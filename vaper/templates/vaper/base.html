@@ -9,9 +9,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   {% compress css %}
-  <link rel='stylesheet' href="{% static 'vaper/css/bootstrap.min.css' %}">
-  <link rel='stylesheet' href="{% static 'vaper/css/bootstrap-theme.min.css' %}">
-  <link rel='stylesheet' href="{% static 'vaper/css/main.css' %}">
+    <link rel='stylesheet' href="{% static 'vaper/css/bootstrap.min.css' %}">
+    <link rel='stylesheet' href="{% static 'vaper/css/bootstrap-theme.min.css' %}">
+    <link rel='stylesheet' href="{% static 'vaper/css/jquery-ui.min.css' %}">
+    <link rel='stylesheet' href="{% static 'vaper/css/jquery-ui.theme.min.css' %}">
+    <link rel='stylesheet' href="{% static 'vaper/css/main.css' %}">
   {% endcompress %}
 
   <!--[if lt IE 9]>
@@ -20,12 +22,20 @@
     <script src="{% static 'vaper/js/respond.min.js' %}"></script>
     {% endcompress %}
   <![endif]-->
+
+  {% compress js %}
+  <script src="{% static 'admin/js/jquery.js' %}"></script>
+  <script src="{% static 'vaper/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'vaper/js/jquery-ui.min.js' %}"></script>
+  {% endcompress %}
+
+  {% block head %}{% endblock %}
 </head>
 
 <body>
 
 <!-- navbar -->
-<div class='navbar navbar-default navbar-static-top'>
+<div class='navbar navbar-default navbar-fixed-top'>
   <div class='container'>
     <div class='navbar-header'>
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -58,26 +68,20 @@
 
 <!-- content container -->
 <div class='container'>
-  <div class="row">
-    <div class="content">
-      <ul class="breadcrumb">
-        {% if user.is_authenticated %}
-          {% block breadcrumbs %}
-            <li class="active"><a href="{% url 'vaper:index' %}">Home</a></li>
-          {% endblock %}
-        {% else %}
-          <li class="active">Log in</li>
-        {% endif %}
-      </ul>
+  <div class="content">
+    <ul class="breadcrumb">
+      {% if user.is_authenticated %}
+        {% block breadcrumbs %}
+          <li class="active"><a href="{% url 'vaper:index' %}">Home</a></li>
+        {% endblock %}
+      {% else %}
+        <li class="active">Log in</li>
+      {% endif %}
+    </ul>
 
 {% block content %}
 {% endblock %}
   </div>
 </div>
-
-  {% compress js %}
-  <script src="{% static 'vaper/js/jquery.min.js' %}"></script>
-  <script src="{% static 'vaper/js/bootstrap.min.js' %}"></script>
-  {% endcompress %}
 </body>
 </html>

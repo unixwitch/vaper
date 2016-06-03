@@ -1,5 +1,34 @@
+{# vim:set sw=2 ts=2 et: #}
 {% extends "vaper/base.html" %}
+{% load staticfiles %}
+{% load compress %}
 {% load bootstrap3 %}
+{% load js %}
+
+{% block head %}
+
+  {% compress js %}
+    <script src="{% static 'vaper/js/recipe.js' %}"></script>
+  {% endcompress %}
+
+  {% compress css %}
+    <link rel='stylesheet' href="{% static 'vaper/css/recipe.css' %}">
+  {% endcompress %}
+
+  <script type='text/javascript'>
+    document.flavours = [
+{% for flavour in recipe.flavour_instances.all %}
+      {
+        'id': {{ flavour.flavour.id|js }},
+        'name': {{ flavour.flavour.name|js }},
+        'manufacturer': {{ flavour.flavour.manufacturer.name|js }},
+        'strength': {{ flavour.strength|js }},
+        'str': {{ flavour.flavour.name|js }} + " (" + {{ flavour.flavour.manufacturer.name|js }} + ")",
+      },
+{% endfor %}
+    ];
+  </script>
+{% endblock %}
 
 {% block breadcrumbs %}
   {{ block.super }}
@@ -10,20 +39,27 @@
 {% block content %}
 <h1>
   Recipe: {{ recipe.name }} 
+  {% if user.is_staff %}
+    <a href="#">
+      <button id='mix-button' class='btn btn-primary'>
+        {% bootstrap_icon 'filter' %}
+      </button></a>
+  {% endif %}
+
   {% if perms.recipe.change_recipe %}
     <a href="{% url 'admin:vaper_recipe_change' recipe.id %}">
-      <button class='btn btn-default'>
+      <button class='btn btn-success'>
         {% bootstrap_icon 'edit' %}
-      </button>
-    </a>
+      </button></a>
   {% endif %}
+
   {% if perms.recipe.delete_recipe %}
     <a href="{% url 'admin:vaper_recipe_delete' recipe.id %}">
-      <button class='btn btn-default'>
+      <button class='btn btn-danger'>
         {% bootstrap_icon 'trash' %}
-      </button>
-    </a>
+      </button></a>
   {% endif %}
+
 </h1>
 
 <h3>Description</h3>
@@ -47,5 +83,93 @@
     </li>
   {% endfor %}
 </ul>
+
+{% if user.is_staff %}
+<!--
+  This is the mixing interface, which is displayed in a jquery-ui dialog.
+-->
+<div id="mix-dialog" title="Mix {{ recipe }}">
+  <div class='text-center'>
+    <div class='mix-dialog-label'>Target ratio</div>
+
+    <div class='vg-slider'>
+      <div id='vg-slider'></div>
+    </div>
+
+    <div class='mix-dialog-label'>Nicotine</div>
+
+    <div>
+      <div style='width: 33%; float: left'>
+        <div class='mix-dialog-label'>Base</div>
+        <div class='btn-group' id='nic-pgvg-buttons'>
+          <button type='button' class='btn btn-primary' data-value='0'>PG</button>
+          <button type='button' class='btn btn-default' data-value='1'>VG</button>
+        </div>
+      </div>
+
+      <div style='width: 33%; float: left'>
+        <div class='mix-dialog-label'>Base strength</div>
+
+        <div class='btn-group' id='nic-base-buttons'>
+          <button type='button' class='btn btn-primary' data-value='0'>0 mg</button>
+          <button type='button' class='btn btn-default' data-value='50'>50 mg</button>
+          <button type='button' class='btn btn-default' data-value='72'>72 mg</button>
+        </div>
+      </div>
+
+      <div style='width: 33%; float: left'>
+      </div>
+
+      <div style='width: 33%; float: left'>
+        <div class='mix-dialog-label'>Target strength</div>
+
+        <div class='nic-target'>
+          <input id='nic-target-value' type='number' min='0' max='100' value='0'> mg/ml
+        </div>
+      </div>
+    </div>
+
+    <div class='clearfix'></div>
+
+    <div class='mix-dialog-label'>Amount to make</div>
+
+    <div class='btn-group' id='amount-buttons'>
+      <button type='button' class='btn btn-primary' data-value='10'>10 ml</button>
+      <button type='button' class='btn btn-default' data-value='30'>30 ml</button>
+      <button type='button' class='btn btn-default' data-value='60'>60 ml</button>
+      <button type='button' class='btn btn-default' data-value='90'>90 ml</button>
+      <button type='button' class='btn btn-default' data-value='120'>120 ml</button>
+    </div>
+
+    <hr>
+
+    <table class='table' id='recipe-table'>
+      <caption>Recipe</caption>
+      <tr id='mix-nicotine'>
+        <th>Nicotine:</th>
+        <td>0 ml</td>
+      </tr>
+      <tr id='mix-vg'>
+        <th>VG:</th>
+        <td>0 ml</td>
+      </tr>
+      <tr id='mix-pg'>
+        <th>PG:</th>
+        <td>0 ml</td>
+      </tr>
+{% for flavour in recipe.flavour_instances.all %}
+      <tr id='mix-flavour-{{ flavour.flavour.id }}'>
+        <th>{{ flavour.flavour.name }} ({{ flavour.flavour.manufacturer }})</td>
+        <td>0 ml</td>
+      </tr>
+{% endfor %}
+      <tr id='mix-ratio'>
+        <th>True ratio:</th>
+        <td></td>
+      </tr>
+    </table>
+  </div>
+</div>
+{% endif %}
 
 {% endblock %}
