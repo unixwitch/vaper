@@ -1,0 +1,19 @@
+{# vim:set sw=4 ts=4 et: #}
+{% extends "vaper/base.html" %}
+
+{% block breadcrumbs %}
+  {{ block.super }}
+  <li>Stock</li>
+{% endblock %}
+
+{% block content %}
+<h2>Remaining stock</h2>
+
+<table class='table'>
+    <tr> <th>Flavour</th> <th>Remaining</th> </tr>
+    {% for flavour in stock %}
+        <tr> <td>{{ flavour }}</td> <td><strong>{{ flavour.ml_remaining }}</strong> ml</td> </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

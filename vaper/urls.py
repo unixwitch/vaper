@@ -10,6 +10,7 @@ vaper_urlpatterns = [
     url(r'^$',                          vaper.views.index, name='index'),
     url(r'^recipe/(?P<id>[0-9]+)/$',    vaper.views.recipe, name='recipe'),
     url(r'^flavour/(?P<id>[0-9]+)/$',   vaper.views.flavour, name='flavour'),
+    url(r'stock/$',                     vaper.views.stock, name='stock'),
     url(r'^login/$',    login, name='login', kwargs = {
         'template_name': 'vaper/login.html',
     }),

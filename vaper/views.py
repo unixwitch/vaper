@@ -31,3 +31,9 @@ def recipe(request, id):
     return render(request, 'vaper/recipe.html', {
         'recipe': recipe,
     })
+
+@login_required
+def stock(request):
+    return render(request, 'vaper/stock.html', {
+        'stock': models.Flavour.objects.all().order_by('ml_remaining')
+    })

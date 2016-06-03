@@ -27,10 +27,15 @@ admin.site.register(Manufacturer, ManufacturerAdmin)
 
 class Flavour(models.Model):
     name = models.CharField(max_length = 64)
+
     manufacturer = models.ForeignKey(
         Manufacturer,
         on_delete = models.CASCADE,
         related_name = 'flavours',
+    )
+
+    ml_remaining = models.PositiveIntegerField(
+        verbose_name = 'Remaining (ml)'
     )
 
     def __str__(self):

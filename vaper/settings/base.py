@@ -6,9 +6,6 @@ from django.contrib import messages
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-SECRET_KEY = 'm=cu3pe^pe_&x)zi8lc!++8u&kf3qf0qq!zi($h^!3opa)xv36'
-DEBUG = True
-
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
