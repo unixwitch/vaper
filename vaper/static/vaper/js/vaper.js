@@ -29,6 +29,7 @@ function ui_setup_dialog(dialog) {
     var div = dialog.find('.vui-dialog');
     var button = dialog.find('.vui-dialog-open');
 
+    button.off('click');
     button.on("click", function(event) {
         div.load(div.data('uri'), function() {
             div.dialog({
@@ -39,27 +40,62 @@ function ui_setup_dialog(dialog) {
 
             ui_setup(div);
             div.dialog("open");
-        });
 
-        return false;
+            $(document).trigger("vaper:ui:dialog:load");
+
+            return false;
+        });
+    });
+}
+
+function ui_setup_dialog_button(button) {
+    var div = $('#'+$(button).data('vui-dialog'));
+
+    $(button).off('click');
+    $(button).on("click", function(event) {
+        div.load(div.data('uri'), function() {
+            attrs = {
+                width: 650,
+                autoOpen: false,
+                modal: true,
+            };
+
+            if (div.data('vui-close') == 'reload') {
+                attrs['close'] = function(event, ui) { location.reload(); };
+            }
+
+            div.dialog(attrs);
+
+            ui_setup(div);
+            div.dialog("open");
+
+            $(document).trigger("vaper:ui:dialog:load");
+
+            return false;
+        });
     });
 }
 
 function ui_setup(elm) {
-    for (let dialog of $('.vui-dialog-button').toArray()) {
+    for (let dialog of $('a.vui-dialog-button').toArray()) {
         ui_setup_dialog($(dialog));
     }
 
-    for (let form of $(elm).find('.vui-form').toArray()) {
-        for (let input of $(form).find('input.vui-autocomplete').toArray()) {
-            $(input).autocomplete({
-                serviceUrl: $(input).data('vui-autocomplete-uri'),
-                autoSelectFirst: true,
-                //showNoSuggestionNotice: true,
-                //noSuggestionNotice: "<em>Creating new manufacturer</em>",
-            });
-        }
+    for (let button of $('button.vui-dialog-button').toArray()) {
+        ui_setup_dialog_button(button);
+    }
 
+    for (let input of $(elm).find('input.vui-autocomplete').toArray()) {
+        $(input).autocomplete({
+            serviceUrl: $(input).data('vui-autocomplete-uri'),
+            autoSelectFirst: true,
+            showNoSuggestionNotice: $(input).data('vui-no-suggestion-notice') ? true : false,
+            noSuggestionNotice: $(input).data('vui-no-suggestion-notice'),
+        });
+    }
+
+    for (let form of $(elm).find('.vui-form').toArray()) {
+        $(form).off('submit');
         $(form).on("submit", function() {
             data = ui_form_build_data(form);
 
@@ -68,11 +104,8 @@ function ui_setup(elm) {
                 url: $(form).data('uri'),
                 data: { 'data': JSON.stringify(data), },
                 success: function(data, status, xhr) {
-                    switch ($(form).data('on-submit')) {
-                    case 'reload':
-                        location.reload();
-                        break;
-                    }
+                    $(form).closest('.vui-dialog').dialog("close");
+                    $(form).closest('.vui-dialog').dialog("destroy");
                 },
                 error: function(xhr, status, error) {
                     data = $.parseJSON(xhr.responseText);

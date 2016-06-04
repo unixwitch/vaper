@@ -46,9 +46,11 @@ vaper_urlpatterns = [
         name='ui/recipe/add'),
 
     # API
-    url(r'^api/flavour/edit/$',
-        vaper.views.api.flavour.edit,
-        name='api/flavour/edit'),
+    #url(r'^api/flavour/autocomplete/$',
+    #    vaper.views.api.flavour.autocomplete,
+    #    name='api/flavour/autocomplete'),
+
+    url(r'^api/flavour/', include(vaper.views.api.flavour)),
 
     url(r'^api/recipe/edit/$',
         vaper.views.api.recipe.edit,

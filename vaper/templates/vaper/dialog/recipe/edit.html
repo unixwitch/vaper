@@ -49,10 +49,40 @@
       </div>
     </div>
 
-    <div class='form-group'>
-      <div class='col-sm-offset-2 col-sm-10'>
-        <button type='submit' class='btn btn-primary'>{% bootstrap_icon 'ok' %} Save</button>
+    <!--
+      Flavours - added dynamically.
+    -->
+    <div class='col-sm-12 text-center'>
+      <h4>Flavours</h4>
+    </div>
+
+    <div class='col-sm-12' id='recipe-flavour-group'>
+    </div>
+
+    <div class='col-sm-6 text-left'>
+      <div class='btn-group'>
+        <button type='button' class='btn btn-default' id='recipe-flavour-add-button'>
+          {% bootstrap_icon 'plus' %} Add flavour
+        </button>
+
+        <button
+          type='button'
+          class='btn btn-default vui-dialog-button'
+          data-vui-dialog='recipe-dialog-add-flavour'>
+          {% bootstrap_icon 'plus' %} New flavour&hellip;
+        </button>
       </div>
     </div>
+
+    <div class='col-sm-6 text-right'>
+      <button type='submit' class='btn btn-primary'>{% bootstrap_icon 'ok' %} Save</button>
+    </div>
   </form>
+
+  <div  class='vui-dialog dialog-add-flavour'
+        id='recipe-dialog-add-flavour'
+        title='Add flavour'
+        data-uri="{% url 'vaper:ui/flavour/add' %}" 
+        style='display: none'>
+  </div>
 </div>

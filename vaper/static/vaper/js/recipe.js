@@ -1,7 +1,12 @@
 /* vim:set sw=4 ts=4 et: */
 
 $(document).ready(function() {
-  
+    $('#index-dialog-add-recipe')
+        .off('dialogopen')
+        .on('dialogopen', function() {
+            recipe_add_flavour();
+        });
+
   /*
    * Main dialog setup.
    */
@@ -232,5 +237,67 @@ function do_update_stock(event) {
       stock: JSON.stringify(document.used_flavours),
     },
   });
-
 }
+
+/*
+ * Add recipe UI support.
+ */
+
+/* Add another flavour to the recipe */
+function recipe_add_flavour(event) {
+    var input = 
+        $('<div class="form-group"/>', {
+            style: 'margin: 0 0 0 0',
+        })
+        .append($('<div class="vui-form-input col-sm-9"/>')
+            .append($('<input/>', {
+                class: 'form-control vui-autocomplete',
+                placeholder: 'Name...',
+                type: 'text',
+                id: 'id_flavour_name',
+                name: 'flavour_name',
+                required: 'required',
+                maxlength: '64',
+            })
+            .data('vui-autocomplete-uri', '/api/flavour/autocomplete')
+            .data('vui-no-suggestion-notice', '<em>Not found.</em>')
+        ))
+        .append($('<div class="vui-form-input col-sm-3"/>')
+            .append($('<div class="input-group"/>')
+                .append($('<input/>', {
+                    class: 'form-control',
+                    value: 0,
+                    type: 'number',
+                    dir: 'rtl',
+                    id: 'id_flavour_strength',
+                    name: 'flavour_strength',
+                    required: 'required',
+                }))
+                .append($('<div class="input-group-addon">%</div>'))
+            )
+        )
+    ;
+
+    ui_setup(input);
+    $('#recipe-flavour-group').append(input);
+
+    return false;
+}
+
+$(document).off("vaper:ui:dialog:load");
+$(document).on("vaper:ui:dialog:load", function() {
+    var add_flavour_button = $('#recipe-flavour-add-button');
+
+    if (typeof add_flavour_button != 'undefined') {
+        add_flavour_button.off('click');
+        add_flavour_button.on("click", recipe_add_flavour);
+    }
+
+    /*
+     * After adding a new flavour, put it in the recipe.
+     */
+    $('#recipe-dialog-add-flavour')
+        .off('dialogclose')
+        .on('dialogclose', function(event, ui) {
+        });
+});

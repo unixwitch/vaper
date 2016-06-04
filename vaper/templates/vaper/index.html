@@ -11,15 +11,7 @@ access details with anyone else.
 <h2>
   Recipes
   {% if perms.recipe.add_recipe %}
-    <a href="#" class='vui-dialog-button'>
-
-      <div  class='vui-dialog dialog-add-recipe'
-            title='Add recipe'
-            data-uri="{% url 'vaper:ui/recipe/add' %}" 
-            style='display: none'>
-      </div>
-
-      <button class='btn btn-primary vui-dialog-open'>
+      <button class='btn btn-primary vui-dialog-open vui-dialog-button' data-vui-dialog='index-dialog-add-recipe'>
         {% bootstrap_icon 'plus' %}
       </button>
     </a>
@@ -39,18 +31,9 @@ access details with anyone else.
 <h2>
   Flavours
   {% if perms.flavour.add_flavour %}
-    <a href="#" class='vui-dialog-button'>
-
-      <div  class='vui-dialog dialog-add-flavour'
-            title='Add flavour'
-            data-uri="{% url 'vaper:ui/flavour/add' %}" 
-            style='display: none'>
-      </div>
-
-      <button class='btn btn-primary vui-dialog-open'>
-        {% bootstrap_icon 'plus' %}
-      </button>
-    </a>
+    <button class='btn btn-primary vui-dialog-button' data-vui-dialog='index-dialog-add-flavour'>
+      {% bootstrap_icon 'plus' %}
+    </button>
   {% endif %}
 </h2>
 
@@ -63,5 +46,21 @@ access details with anyone else.
 {% else %}
   <p>Sorry, no flavours have been added yet.</p>
 {% endif %}
+
+<div  class='vui-dialog dialog-add-flavour'
+      id='index-dialog-add-flavour'
+      title='Add flavour'
+      data-uri="{% url 'vaper:ui/flavour/add' %}" 
+      data-vui-close='reload'
+      style='display: none'>
+</div>
+
+<div  class='vui-dialog dialog-add-recipe'
+      id='index-dialog-add-recipe'
+      title='Add recipe'
+      data-uri="{% url 'vaper:ui/recipe/add' %}" 
+      data-vui-close='reload'
+      style='display: none'>
+</div>
 
 {% endblock %}

@@ -2,10 +2,16 @@
 
 from django import forms
 from django.db import models, IntegrityError
+from django.db.models import Q
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404
+from django_quicky import routing, view
 from vaper.models import Flavour, Manufacturer
 import json
+
+url, urlpatterns = routing()
 
 class FlavourForm(forms.ModelForm):
     manuf = forms.CharField(max_length=64)
@@ -17,13 +23,11 @@ class FlavourForm(forms.ModelForm):
             'ml_remaining',
         ]
 
+@url('^edit/$', name='api/flavour/edit')
+@login_required
+@require_http_methods(['POST'])
+@view(render_to='json')
 def edit(request):
-    if request.method != 'POST':
-        return JsonResponse({
-            'status': 'error',
-            'errors': [ 'Invalid method' ],
-        }, status=400)
-
     data = json.loads(request.POST['data'])
     if 'id' in data:
         flavour = get_object_or_404(Flavour, id=data['id'])
@@ -50,7 +54,20 @@ def edit(request):
             },
         }, status=400)
 
-    return JsonResponse({
+    return {
         'status': 'success',
         'message': 'Flavour added successfully',
-    })
+    }
+
+@url('^autocomplete/$', name='api/flavour/autocomplete')
+@login_required
+@require_http_methods(['GET'])
+@view(render_to='json')
+def autocomplete(request):
+    return {
+        'query': request.GET['query'],
+        'suggestions': [
+            "{} ({})".format(f.name, f.manufacturer)
+            for f in Flavour.objects.filter(name__icontains=request.GET['query'])
+        ],
+    }

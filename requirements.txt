@@ -6,3 +6,4 @@ django-compressor==2.0
 psycopg2==2.6.1
 rcssmin==1.0.6
 rjsmin==1.0.12
+git+https://github.com/ftarnell/django-quicky.git
