@@ -11,8 +11,15 @@ access details with anyone else.
 <h2>
   Recipes
   {% if perms.recipe.add_recipe %}
-    <a href="{% url 'admin:vaper_recipe_add' %}">
-      <button class='btn btn-default'>
+    <a href="#" class='vui-dialog-button'>
+
+      <div  class='vui-dialog dialog-add-recipe'
+            title='Add recipe'
+            data-uri="{% url 'vaper:ui/recipe/add' %}" 
+            style='display: none'>
+      </div>
+
+      <button class='btn btn-primary vui-dialog-open'>
         {% bootstrap_icon 'plus' %}
       </button>
     </a>
@@ -32,8 +39,15 @@ access details with anyone else.
 <h2>
   Flavours
   {% if perms.flavour.add_flavour %}
-    <a href="{% url 'admin:vaper_flavour_add' %}">
-      <button class='btn btn-default'>
+    <a href="#" class='vui-dialog-button'>
+
+      <div  class='vui-dialog dialog-add-flavour'
+            title='Add flavour'
+            data-uri="{% url 'vaper:ui/flavour/add' %}" 
+            style='display: none'>
+      </div>
+
+      <button class='btn btn-primary vui-dialog-open'>
         {% bootstrap_icon 'plus' %}
       </button>
     </a>
@@ -43,7 +57,7 @@ access details with anyone else.
 {% if flavours %}
   <ul>
     {% for flavour in flavours %}
-      <li><a href="{% url 'vaper:flavour' id=flavour.id %}">{{ flavour.name }}</a></li>
+      <li><a href="{% url 'vaper:flavour/view' id=flavour.id %}">{{ flavour.name }}</a></li>
     {% endfor %}
   </ul>
 {% else %}

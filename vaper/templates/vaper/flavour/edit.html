@@ -1,0 +1,114 @@
+{# vim:set sw=2 ts=2 et: #}
+{% extends "vaper/base.html" %}
+{% load bootstrap3 %}
+{% load compress %}
+{% load staticfiles %}
+
+{% block head %}
+  {% compress css %}
+  <link rel='stylesheet' text='text/css' href="{% static 'vaper/css/flavour.css' %}">
+  {% endcompress %}
+
+  {% compress js %}
+  <script src='{% static 'vaper/js/flavour.js' %}'></script>
+  {% endcompress %}
+{% endblock %}
+
+{% block breadcrumbs %}
+  {{ block.super }}
+  <li>Flavours</li>
+  <li><a href='{% url 'vaper:flavour/view' flavour.id %}'>{{ flavour.name }}</a></li>
+  <li class='active'>Edit</li>
+{% endblock %}
+
+{% block content %}
+<h1>
+  {{ flavour.name }}
+</h1>
+
+<div class='container'>
+
+<form method='post' action='{% url 'vaper:flavour/edit' flavour.id %}'>
+{% csrf_token %}
+
+{% bootstrap_form_errors form %}
+
+  <!--
+    Name
+    -->
+  <div class='row form-group'>
+    <div class='col-sm-2'>
+      <label class='control-label' for='id_name'>Name</label>
+    </div>
+
+    <div class='col-sm-4'>
+      <input
+        class='form-control'
+        type='text'
+        id='id_name'
+        name='name'
+        required="required"
+        value="{{ flavour.name }}"
+        maxlength=64>
+    </div>
+  </div>
+
+  <!--
+    Manufacturer
+    -->
+  <div class='row form-group'>
+    <div class='col-sm-2'>
+      <label class='control-label' for='id_manufacturer'>Manufacturer</label>
+    </div>
+
+    <div class='col-sm-4'>
+      <input
+        class='form-control'
+        type='text'
+        id='id_manufacturer'
+        name='manuf'
+        required="required"
+        value="{{ flavour.manufacturer.name }}"
+        maxlength='64'>
+    </div>
+  </div>
+
+  <!--
+    Remaining ml
+    -->
+  <div class='row form-group'>
+    <div class='col-sm-2'>
+      <label class='control-label' for='id_ml_remaining'>Remaining</label>
+    </div>
+
+    <div class='col-sm-4'>
+      <input
+        class='form-control'
+        type='number'
+        dir='rtl'
+        id='id_ml_remaining'
+        name='ml_remaining'
+        required="required"
+        value='{{ flavour.ml_remaining }}'
+        min='0'>
+      ml
+    </div>
+  </div>
+
+  <button type='submit' class='btn btn-primary'>{% bootstrap_icon 'ok' %} Save changes</button>
+
+{% if perms.flavour.delete_flavour %}
+<a href="{% url 'vaper:flavour/delete' flavour.id %}">
+  <button type='button' class='btn btn-danger'>
+    {% bootstrap_icon 'trash' %} Delete flavour
+  </button></a>
+{% endif %}
+
+<a href="{% url 'vaper:flavour/view' flavour.id %}">
+  <button type='button' class='btn btn-default'>
+    Cancel
+  </button></a>
+
+</form>
+
+{% endblock %}

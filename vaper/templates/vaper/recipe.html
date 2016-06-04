@@ -38,24 +38,24 @@
 
 {% block content %}
 <h1>
-  Recipe: {{ recipe.name }} 
+  {{ recipe.name }} 
   {% if user.is_staff %}
     <a href="#">
-      <button id='mix-button' class='btn btn-primary'>
+      <button id='mix-button' class='btn btn-primary' title='Mix'>
         {% bootstrap_icon 'filter' %}
       </button></a>
   {% endif %}
 
   {% if perms.recipe.change_recipe %}
-    <a href="{% url 'admin:vaper_recipe_change' recipe.id %}">
-      <button class='btn btn-success'>
+    <a href="{% url 'vaper:flavour/edit' recipe.id %}">
+      <button class='btn btn-success' title='Edit'>
         {% bootstrap_icon 'edit' %}
       </button></a>
   {% endif %}
 
   {% if perms.recipe.delete_recipe %}
     <a href="{% url 'admin:vaper_recipe_delete' recipe.id %}">
-      <button class='btn btn-danger'>
+      <button class='btn btn-danger' title='Delete'>
         {% bootstrap_icon 'trash' %}
       </button></a>
   {% endif %}
@@ -77,7 +77,7 @@
 <ul>
   {% for flavour in recipe.flavour_instances.all %}
     <li>
-      <a href="{% url 'vaper:flavour' flavour.flavour.id %}">{{ flavour.flavour }}</a>{% if user.is_staff %},
+      <a href="{% url 'vaper:flavour/view' flavour.flavour.id %}">{{ flavour.flavour }}</a>{% if user.is_staff %},
         {{ flavour.strength }}%
       {% endif %}
     </li>
@@ -124,7 +124,7 @@
         <div class='mix-dialog-label'>Target strength</div>
 
         <div class='nic-target'>
-          <input id='nic-target-value' type='number' min='0' max='100' value='0'> mg/ml
+          <input id='nic-target-value' type='number' min='0' max='100' value='0' dir='rtl'> mg/ml
         </div>
       </div>
     </div>

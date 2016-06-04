@@ -1,0 +1,43 @@
+{% extends "vaper/base.html" %}
+{% load bootstrap3 %}
+
+{% block breadcrumbs %}
+  {{ block.super }}
+  <li>Flavours</li>
+  <li class='active'>{{ flavour.name }}</li>
+{% endblock %}
+
+{% block content %}
+<h1>
+  {{ flavour.name }}
+
+  {% if perms.flavour.change_flavour %}
+    <a href="#" class='vui-dialog-button'>
+
+      <div  class='vui-dialog dialog-edit-flavour'
+            title='Edit flavour'
+            data-uri="{% url 'vaper:ui/flavour/edit' flavour.id %}" 
+            style='display: none'>
+      </div>
+
+      <button class='btn btn-primary vui-dialog-open'>
+        {% bootstrap_icon 'edit' %}
+      </button>
+    </a>
+  {% endif %}
+</h1>
+
+<ul>
+    <li><strong>Manufacturer</strong>: {{ flavour.manufacturer }}</li>
+    <li><strong>Remaining</strong>: {{ flavour.ml_remaining }} ml</li>
+</ul>
+
+<h2>Recipes</h2>
+
+<ul>
+{% for recipe in recipes %}
+<li><a href="{% url 'vaper:recipe' recipe.id %}">{{ recipe }}</a></li>
+{% endfor %}
+</ul>
+
+{% endblock %}

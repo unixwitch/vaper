@@ -8,8 +8,6 @@ $(document).ready(function() {
   $("#mix-dialog").dialog({
     width: 650,
     autoOpen: false,
-    //show: "slideDown",
-    //hide: "slideUp",
     modal: true,
     buttons: [
       {
@@ -22,8 +20,6 @@ $(document).ready(function() {
   $("#stock-dialog").dialog({
     width: 400,
     autoOpen: false,
-    //show: "slideDown",
-    //hide: "slideUp",
     modal: true,
     buttons: [
       {
@@ -47,8 +43,6 @@ $(document).ready(function() {
   $("#updating-dialog").dialog({
     width: 400,
     autoOpen: false,
-    //show: "slideDown",
-    //hide: "slideUp",
     modal: true,
   });
 
@@ -144,7 +138,7 @@ function recalculate(slider_value) {
   document.used_flavours = [];
 
   for (let f of document.flavours) {
-    var f_ml = total_ml * (f.strength / 100.0);
+    var f_ml = Math.round(total_ml * (f.strength / 100.0) * 100) / 100;
     $('#mix-flavour-'+f.id+' td').html(f_ml + " ml");
     extra_pg += f_ml;
 

@@ -16,6 +16,7 @@
     <link rel='stylesheet' href="{% static 'vaper/css/jquery-ui.min.css' %}">
     <link rel='stylesheet' href="{% static 'vaper/css/jquery-ui.theme.min.css' %}">
     <link rel='stylesheet' href="{% static 'vaper/css/main.css' %}">
+    <link rel='stylesheet' href="{% static 'vaper/css/flavour.css' %}">
   {% endcompress %}
 
   <!--[if lt IE 9]>
@@ -26,14 +27,22 @@
   <![endif]-->
 
   {% compress js %}
+  <!-- Vendor JS -->
   <script src="{% static 'admin/js/jquery.js' %}"></script>
   <script src="{% static 'vaper/js/bootstrap.min.js' %}"></script>
   <script src="{% static 'vaper/js/jquery-ui.min.js' %}"></script>
   <script src="{% static 'vaper/js/js.cookie.js' %}"></script>
+  <script src="{% static 'vaper/js/jquery.autocomplete.js' %}"></script>
+
+  <!-- Vaper JS -->
+  <script src='{% static 'vaper/js/vaper.js' %}'></script>
+  <script src='{% static 'vaper/js/flavour.js' %}'></script>
+  <script src='{% static 'vaper/js/recipe.js' %}'></script>
   {% endcompress %}
 
   <script type='text/javascript'>
     var csrf_token = "{% csrf_token %}";
+    document.base_url = '/';
   </script>
 
   {% block head %}{% endblock %}
@@ -88,6 +97,7 @@
 
 {% block content %}
 {% endblock %}
+
   </div>
 </div>
 </body>

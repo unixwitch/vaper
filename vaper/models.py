@@ -12,7 +12,7 @@ from django.contrib import admin
 #
 
 class Manufacturer(models.Model):
-    name = models.CharField(max_length = 64)
+    name = models.CharField(max_length = 64, unique=True)
 
     def __str__(self):
         return self.name
@@ -26,6 +26,9 @@ class ManufacturerAdmin(admin.ModelAdmin):
 admin.site.register(Manufacturer, ManufacturerAdmin)
 
 class Flavour(models.Model):
+    class Meta:
+        unique_together = ('name', 'manufacturer', )
+
     name = models.CharField(max_length = 64)
 
     manufacturer = models.ForeignKey(
@@ -57,7 +60,7 @@ admin.site.register(Flavour, FlavourAdmin)
 #
 
 class Recipe(models.Model):
-    name = models.CharField(max_length = 64)
+    name = models.CharField(max_length = 64, unique=True)
 
     description = models.TextField(
         null = True,
