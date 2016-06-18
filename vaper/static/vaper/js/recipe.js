@@ -64,8 +64,8 @@ $(document).ready(function() {
     slide:  ratio_slider_update,
   });
 
-  $("#vg-slider").append('<div id="vg-label" class="ratio-label">VG</div>');
-  $("#vg-slider").append('<div id="pg-label" class="ratio-label">PG</div>');
+  $("#vg-slider").append('<div id="vg-label" class="ratio-label"></div>');
+  $("#vg-slider").append('<div id="pg-label" class="ratio-label"></div>');
 
   $("#vg-slider").slider("value", 60);
 
