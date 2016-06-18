@@ -94,13 +94,13 @@
 -->
 <div id="mix-dialog" title="Mix {{ recipe }}" style='display: none'>
   <div class='text-center'>
-    <div class='mix-dialog-label'>Target ratio</div>
+    <div class='mix-dialog-header'>Target ratio</div>
 
     <div class='vg-slider'>
       <div id='vg-slider'></div>
     </div>
 
-    <div class='mix-dialog-label'>Nicotine</div>
+    <div class='mix-dialog-header'>Nicotine</div>
 
     <div>
       <div style='width: 33%; float: left'>
@@ -135,7 +135,7 @@
 
     <div class='clearfix'></div>
 
-    <div class='mix-dialog-label'>Amount to make</div>
+    <div class='mix-dialog-header'>Amount to make</div>
 
     <div class='btn-group' id='amount-buttons'>
       <button type='button' class='btn btn-primary' data-value='10'>10 ml</button>
@@ -145,10 +145,9 @@
       <button type='button' class='btn btn-default' data-value='120'>120 ml</button>
     </div>
 
-    <hr>
+    <div class='mix-dialog-header'>Recipe</div>
 
     <table class='table' id='recipe-table'>
-      <caption>Recipe</caption>
       <tr id='mix-nicotine'>
         <th>Nicotine:</th>
         <td>0 ml</td>
