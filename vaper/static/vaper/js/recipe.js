@@ -167,8 +167,8 @@ function recalculate(slider_value) {
   var total_pg = actual_pg + extra_pg;
   var total_vg = actual_vg + extra_vg;
 
-  $('#mix-vg td').html(actual_vg + " ml");
-  $('#mix-pg td').html(actual_pg + " ml");
+  $('#mix-vg td').html(Math.round(actual_vg * 10) / 10 + " ml");
+  $('#mix-pg td').html(Math.round(actual_pg * 10) / 10 + " ml");
 
   var actual_vg_ratio = Math.round((total_vg / total_ml) * 100);
   $('#mix-ratio td').html(actual_vg_ratio + "/" + (100 - actual_vg_ratio));
