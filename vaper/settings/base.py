@@ -101,7 +101,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-LOGIN_URL = 'vaper:login'
+LOGIN_URL = 'vaper:user/login'
 
 BOOTSTRAP_ADMIN_SIDEBAR_MENU = False
 
