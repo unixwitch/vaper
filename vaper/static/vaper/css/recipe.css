@@ -71,6 +71,7 @@ div#mix-dialog {
  */
 
 .ui-slider-horizontal {
+    margin: 0 1em 0 1em;
     font-weight: 400;
 }
 
