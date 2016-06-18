@@ -279,6 +279,7 @@ function recipe_make_flavourinstance_ui(fnum, id, name, strength) {
                     id: 'id_flavour_'+fnum+'_strength',
                     name: 'flavour_'+fnum+'_strength',
                     required: 'required',
+                    step: '0.1',
                     value: strength,
                 }))
                 .append($('<div class="input-group-addon">%</div>'))

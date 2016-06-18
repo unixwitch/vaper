@@ -32,6 +32,9 @@ class Flavour(models.Model):
         verbose_name = 'Remaining (ml)',
         max_digits = 7,
         decimal_places = 2,
+		validators = [
+            MinValueValidator(0),
+        ],
     )
 
     def __str__(self):
@@ -73,7 +76,9 @@ class FlavourInstance(models.Model):
         related_name = 'flavour_instances'
     )
 
-    strength = models.IntegerField(
+    strength = models.DecimalField(
+        max_digits = 5,
+        decimal_places = 2,
 		validators = [
             MinValueValidator(0),
             MaxValueValidator(100)
