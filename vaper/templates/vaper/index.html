@@ -46,7 +46,7 @@ access details with anyone else.
             <li><a href="{% url 'vaper:flavour/view' id=flavour.id %}">{{ flavour.name }}</a></li>
           {% endfor %}
         </ul>
-      {% end %}
+      {% endif %}
     {% endfor %}
   </ul>
 {% else %}
