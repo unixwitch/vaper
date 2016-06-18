@@ -26,21 +26,10 @@ vaper_urlpatterns = [
         name='flavour/view'),
 
     # UI
-    url(r'^ui/flavour/(?P<id>[0-9]+)/edit/$',
-        vaper.views.ui.flavour.edit,
-        name='ui/flavour/edit'),
-
     url(r'^ui/flavour/add/$',
         vaper.views.ui.flavour.add,
         name='ui/flavour/add'),
-
-    url(r'^ui/recipe/add/$',
-        vaper.views.ui.recipe.add,
-        name='ui/recipe/add'),
-
-    url(r'^ui/recipe/(?P<id>[0-9]+)/edit/$',
-        vaper.views.ui.recipe.edit,
-        name='ui/recipe/edit'),
+    url(r'^ui/recipe/', include(vaper.views.ui.recipe)),
 
     # API
 

@@ -60,10 +60,6 @@ function ui_setup_dialog_button(button) {
                 modal: true,
             };
 
-            if (div.data('vui-close') == 'reload') {
-                attrs['close'] = function(event, ui) { location.reload(); };
-            }
-
             div.dialog(attrs);
 
             ui_setup(div);
@@ -112,8 +108,18 @@ function ui_setup(elm) {
                 url: $(form).data('uri'),
                 data: { 'data': JSON.stringify(data), },
                 success: function(data, status, xhr) {
-                    $(form).closest('.vui-dialog').dialog("close");
-                    $(form).closest('.vui-dialog').dialog("destroy");
+                    var dlg = $(form).closest('.vui-dialog');
+                    dlg.dialog("close");
+                    dlg.dialog("destroy");
+
+                    switch (dlg.data('vui-close')) {
+                    case 'reload':
+                        location.reload();
+                        break;
+                    case 'home':
+                        location.href = '/';
+                        break;
+                    }
                 },
                 error: function(xhr, status, error) {
                     data = $.parseJSON(xhr.responseText);

@@ -19,13 +19,34 @@ class RecipeForm(forms.ModelForm):
             'description',
         ]
 
+@url('^delete/$', name='api/recipe/delete')
+@login_required
+@require_http_methods(['POST'])
+@view(render_to='json')
+def delete(request):
+    data = json.loads(request.POST['data'])
+
+    try:
+        recipe = Recipe.objects.get(id=data['id'])
+    except Recipe.DoesNotExist:
+        return JsonResponse({
+            'status': 'error',
+            'errors': {
+                'id': 'Recipe id not found',
+                },
+            })
+
+    recipe.delete()
+    return {
+        'status': 'success',
+    }
+
 @url('^edit/$', name='api/recipe/edit')
 @login_required
 @require_http_methods(['POST'])
 @view(render_to='json')
 def edit(request):
     data = json.loads(request.POST['data'])
-    print data
 
     if 'id' in data:
         recipe = get_object_or_404(Recipe, id=data['id'])

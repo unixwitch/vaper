@@ -1,0 +1,23 @@
+{# vim:set sw=2 ts=2 et: #}
+
+{% load bootstrap3 %}
+{% load compress %}
+{% load staticfiles %}
+
+<div  id='dialog-delete-recipe'
+      class='vui-form'
+      data-uri='{% url 'vaper:api/recipe/delete' %}'
+      data-on-submit='home'
+      data-csrftoken='{{ csrf_token }}'>
+
+  <form>
+    <input type='hidden' name='id' value='{{ recipe.id }}'>
+
+    <p>Really delete the recipe <strong>{{ recipe.name }}</strong>?
+    This cannot be undone.</p>
+
+    <div class='col-sm-12 text-right'>
+      <button type='submit' class='btn btn-danger'>{% bootstrap_icon 'delete' %} Delete</button>
+    </div>
+  </form>
+</div>

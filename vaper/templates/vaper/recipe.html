@@ -48,21 +48,21 @@
 
   {% if perms.recipe.change_recipe %}
     <button
-      class='btn btn-primary vui-dialog-open vui-dialog-button' 
+      class='btn btn-success vui-dialog-open vui-dialog-button' 
       data-vui-dialog='index-dialog-edit-recipe'
       data-recipe-id='{{ recipe.id }}'>
       {% bootstrap_icon 'edit' %}
     </button>
   {% endif %}
 
-  {% comment %}
   {% if perms.recipe.delete_recipe %}
-    <a href="{% url 'admin:vaper_recipe_delete' recipe.id %}">
-      <button class='btn btn-danger' title='Delete'>
-        {% bootstrap_icon 'trash' %}
-      </button></a>
+    <button
+      class='btn btn-danger vui-dialog-open vui-dialog-button' 
+      data-vui-dialog='index-dialog-delete-recipe'
+      data-recipe-id='{{ recipe.id }}'>
+      {% bootstrap_icon 'trash' %}
+    </button>
   {% endif %}
-  {% endcomment %}
 
 </h1>
 
@@ -181,7 +181,7 @@
 </div>
 
 <div id='updating-dialog' title='Stock update' style='display: none'>
-  <p><strong>Please wait.<strong></p>
+  <p><strong>Please wait.</strong></p>
 </div>
 
 {% endif %}
@@ -191,6 +191,14 @@
       title='Edit recipe'
       data-uri="{% url 'vaper:ui/recipe/edit' recipe.id %}" 
       data-vui-close='reload'
+      style='display: none'>
+</div>
+
+<div  class='vui-dialog dialog-delete-recipe'
+      id='index-dialog-delete-recipe'
+      title='Delete recipe'
+      data-uri="{% url 'vaper:ui/recipe/delete' recipe.id %}" 
+      data-vui-close='home'
       style='display: none'>
 </div>
 
