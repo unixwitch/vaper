@@ -1,0 +1,24 @@
+{# vim:set sw=2 ts=2 et: #}
+{% extends "vaper/base.html" %}
+{% load bootstrap3 %}
+
+{% block title %}
+User account
+{% endblock %}
+
+{% block breadcrumbs %}
+  {{ block.super }}
+  <li class='active'>Account details</li>
+{% endblock %}
+
+{% block content %}
+<form action='{% url 'vaper:user/profile' %}' method='post'>
+{% csrf_token %}
+{% bootstrap_form user_form %}
+
+<button type='submit' class='btn btn-primary'>
+  {% bootstrap_icon 'save' %} Save changes
+</button>
+
+</form>
+{% endblock %}

@@ -6,6 +6,7 @@ import vaper.views
 import vaper.views.flavour
 import vaper.views.api
 import vaper.views.ui
+import vaper.views.user
 
 app_name = 'vaper'
 
@@ -59,12 +60,15 @@ vaper_urlpatterns = [
         name='api/manufacturer/autocomplete'),
 
     url(r'stock/$',                     vaper.views.stock, name='stock'),
-    url(r'^login/$',    login, name='login', kwargs = {
+
+    # User
+    url(r'^login/$',    login, name='user/login', kwargs = {
         'template_name': 'vaper/login.html',
     }),
-    url(r'^logout/$',   logout, name='logout', kwargs = {
+    url(r'^logout/$',   logout, name='user/logout', kwargs = {
         'next_page': '/',
     }),
+    url(r'^user/', include(vaper.views.user)),
 ]
 
 urlpatterns = [
