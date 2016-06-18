@@ -144,7 +144,7 @@ function recalculate(slider_value) {
 
   for (let f of document.flavours) {
     var f_ml = Math.round(total_ml * (f.strength / 100.0) * 100) / 100;
-    $('#mix-flavour-'+f.id+' td').html(f_ml + " ml");
+    $('#mix-flavour-'+f.id+' td').html(f_ml + " ml (" + f.strength + "%)");
     extra_pg += f_ml;
 
     document.used_flavours.push({
