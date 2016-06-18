@@ -64,3 +64,8 @@ span.recipe-new-flavour {
   color: #9999ff;
   cursor: pointer;
 }
+
+.footer {
+	border-top: solid 1px #999;
+	background-color: #eee;
+}

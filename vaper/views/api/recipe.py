@@ -39,11 +39,26 @@ def edit(request):
             'errors':  form.errors,
         }, status=400)
 
+    numflavours = int(data['numflavours'])
+
+    errors = {}
+
+    for fn in range(0, numflavours):
+        flavour_id = data['flavour_{}_name_data'.format(fn)]
+
+        if flavour_id == '':
+            errors['flavour-{}'.format(fn)] = 'Flavour not found in database'
+
+    if len(errors) > 0:
+        return JsonResponse({
+            'status': 'error',
+            'errors': errors,
+        }, status=400)
+
     recipe = form.instance
     recipe.flavour_instances.all().delete()
     form.save()
 
-    numflavours = int(data['numflavours'])
     for fn in range(0, numflavours):
         flavour_id = data['flavour_{}_name_data'.format(fn)]
         flavour_strength = data['flavour_{}_strength'.format(fn)]

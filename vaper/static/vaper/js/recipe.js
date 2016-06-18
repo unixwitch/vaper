@@ -246,7 +246,7 @@ function do_update_stock(event) {
 /* Add another flavour to the recipe */
 function recipe_make_flavourinstance_ui(fnum, id, name, strength) {
     var input = 
-        $('<div class="form-group"/>', {
+        $('<div class="form-group" id="vui-form-group-flavour-'+fnum+'"/>', {
             style: 'margin: 0 0 0 0',
         })
         .append($('<div class="vui-form-input col-sm-9"/>')
@@ -284,6 +284,7 @@ function recipe_make_flavourinstance_ui(fnum, id, name, strength) {
                 .append($('<div class="input-group-addon">%</div>'))
             )
         )
+        .append($('<ul class="help-block"></ul>'))
     ;
 
     return input;
