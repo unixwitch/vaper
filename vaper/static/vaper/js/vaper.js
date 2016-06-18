@@ -19,6 +19,10 @@ function ui_form_build_data(form) {
         data[$(input).attr('name')] = $(input).val();
     }
 
+    for (let input of $(form).find('textarea').toArray()) {
+        data[$(input).attr('name')] = $(input).val();
+    }
+
     return data;
 }
 
