@@ -47,18 +47,22 @@
   {% endif %}
 
   {% if perms.recipe.change_recipe %}
-    <a href="{% url 'vaper:flavour/edit' recipe.id %}">
-      <button class='btn btn-success' title='Edit'>
-        {% bootstrap_icon 'edit' %}
-      </button></a>
+    <button
+      class='btn btn-primary vui-dialog-open vui-dialog-button' 
+      data-vui-dialog='index-dialog-edit-recipe'
+      data-recipe-id='{{ recipe.id }}'>
+      {% bootstrap_icon 'edit' %}
+    </button>
   {% endif %}
 
+  {% comment %}
   {% if perms.recipe.delete_recipe %}
     <a href="{% url 'admin:vaper_recipe_delete' recipe.id %}">
       <button class='btn btn-danger' title='Delete'>
         {% bootstrap_icon 'trash' %}
       </button></a>
   {% endif %}
+  {% endcomment %}
 
 </h1>
 
@@ -181,5 +185,13 @@
 </div>
 
 {% endif %}
+
+<div  class='vui-dialog dialog-edit-recipe'
+      id='index-dialog-edit-recipe'
+      title='Edit recipe'
+      data-uri="{% url 'vaper:ui/recipe/edit' recipe.id %}" 
+      data-vui-close='reload'
+      style='display: none'>
+</div>
 
 {% endblock %}

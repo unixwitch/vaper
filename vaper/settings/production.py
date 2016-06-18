@@ -7,6 +7,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'vaper',
+        'ATOMIC_REQUESTS': True,
     }
 }
 

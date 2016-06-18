@@ -21,5 +21,6 @@ def add(request):
         'recipe': {
             'name': '',
             'description': '',
+            'flavour_instances': [],
         },
     })

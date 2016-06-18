@@ -2,7 +2,6 @@
 
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
-from django.contrib import admin
 
 ###
 ### FLAVOUR
@@ -16,14 +15,6 @@ class Manufacturer(models.Model):
 
     def __str__(self):
         return self.name
-
-class ManufacturerInline(admin.TabularInline):
-    model = Manufacturer
-
-class ManufacturerAdmin(admin.ModelAdmin):
-    model = Manufacturer
-
-admin.site.register(Manufacturer, ManufacturerAdmin)
 
 class Flavour(models.Model):
     class Meta:
@@ -43,14 +34,6 @@ class Flavour(models.Model):
 
     def __str__(self):
         return "{} ({})".format(self.name, self.manufacturer)
-
-class FlavourInline(admin.TabularInline):
-    model = Flavour
-
-class FlavourAdmin(admin.ModelAdmin):
-    model = Flavour
-
-admin.site.register(Flavour, FlavourAdmin)
 
 ###
 ### RECIPE
@@ -103,14 +86,3 @@ class FlavourInstance(models.Model):
 
     def __str__(self):
         return "{}, {}%".format(self.flavour, self.strength)
-
-class FlavourInstanceInline(admin.TabularInline):
-    model = FlavourInstance
-    extra = 1
-
-class RecipeAdmin(admin.ModelAdmin):
-    model = Recipe
-    inlines = [ FlavourInstanceInline ]
-
-admin.site.register(Recipe, RecipeAdmin)
-

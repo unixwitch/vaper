@@ -2,7 +2,14 @@
 
 from django import forms
 from django.http import JsonResponse
-from vaper.models import Recipe
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_http_methods
+from vaper.models import Recipe, Flavour, FlavourInstance
+from django_quicky import routing, view
+from django.shortcuts import get_object_or_404
+import json
+
+url, urlpatterns = routing()
 
 class RecipeForm(forms.ModelForm):
     class Meta:
@@ -12,14 +19,14 @@ class RecipeForm(forms.ModelForm):
             'description',
         ]
 
+@url('^edit/$', name='api/recipe/edit')
+@login_required
+@require_http_methods(['POST'])
+@view(render_to='json')
 def edit(request):
-    if request.method != 'POST':
-        return JsonResponse({
-            'status': 'error',
-            'errors': [ 'Invalid method' ],
-        }, status=400)
-
     data = json.loads(request.POST['data'])
+    print data
+
     if 'id' in data:
         recipe = get_object_or_404(Recipe, id=data['id'])
         form = RecipeForm(data, instance=recipe)
@@ -32,9 +39,25 @@ def edit(request):
             'errors':  form.errors,
         }, status=400)
 
+    recipe = form.instance
+    recipe.flavour_instances.all().delete()
     form.save()
 
-    return JsonResponse({
+    numflavours = int(data['numflavours'])
+    for fn in range(0, numflavours):
+        flavour_id = data['flavour_{}_name_data'.format(fn)]
+        flavour_strength = data['flavour_{}_strength'.format(fn)]
+
+        flavour = Flavour.objects.get(id=flavour_id)
+
+        recipe.flavour_instances.create(
+            flavour = flavour,
+            strength = flavour_strength,
+        )
+
+    recipe.save()
+
+    return {
         'status': 'success',
         'message': 'Recipe added successfully',
-    })
+    }

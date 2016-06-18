@@ -244,7 +244,7 @@ function do_update_stock(event) {
  */
 
 /* Add another flavour to the recipe */
-function recipe_add_flavour(event) {
+function recipe_make_flavourinstance_ui(fnum, id, name, strength) {
     var input = 
         $('<div class="form-group"/>', {
             style: 'margin: 0 0 0 0',
@@ -254,11 +254,18 @@ function recipe_add_flavour(event) {
                 class: 'form-control vui-autocomplete',
                 placeholder: 'Name...',
                 type: 'text',
-                id: 'id_flavour_name',
-                name: 'flavour_name',
+                id: 'id_flavour_'+fnum+'_name',
+                name: 'flavour_'+fnum+'_name',
                 required: 'required',
                 maxlength: '64',
+                value: name,
             })
+            .append($('<input/>', {
+                type: 'hidden',
+                id: 'id_flavour_'+fnum+'_name_data',
+                name: 'flavour_'+fnum+'_name_data',
+                value: id,
+            }))
             .data('vui-autocomplete-uri', '/api/flavour/autocomplete')
             .data('vui-no-suggestion-notice', '<em>Not found.</em>')
         ))
@@ -269,15 +276,31 @@ function recipe_add_flavour(event) {
                     value: 0,
                     type: 'number',
                     dir: 'rtl',
-                    id: 'id_flavour_strength',
-                    name: 'flavour_strength',
+                    id: 'id_flavour_'+fnum+'_strength',
+                    name: 'flavour_'+fnum+'_strength',
                     required: 'required',
+                    value: strength,
                 }))
                 .append($('<div class="input-group-addon">%</div>'))
             )
         )
     ;
 
+    return input;
+}
+
+function recipe_add_flavour(event) {
+    var flavour_group = $('#recipe-flavour-group');
+
+    if (typeof flavour_group.data('numflavours') == 'undefined') {
+        flavour_group.data('numflavours', 0);
+    }
+    fnum = flavour_group.data('numflavours');
+
+    flavour_group.data('numflavours', flavour_group.data('numflavours') + 1);
+    $('#recipe-numflavours').val(flavour_group.data('numflavours'));
+
+    input = recipe_make_flavourinstance_ui(fnum, '', '', 0);
     ui_setup(input);
     $('#recipe-flavour-group').append(input);
 
@@ -300,4 +323,23 @@ $(document).on("vaper:ui:dialog:load", function() {
         .off('dialogclose')
         .on('dialogclose', function(event, ui) {
         });
+
+    /*
+     * For editing (as opposed to adding), pre-populate the existing
+     * flavours.
+     */
+    if (document.flavours) {
+        var flavour_group = $('#recipe-flavour-group');
+        var fnum = 0;
+
+        for (let fl of document.flavours) {
+            input = recipe_make_flavourinstance_ui(fnum++,
+                        fl.id, fl.name, fl.strength);
+            ui_setup(input);
+            flavour_group.append(input);
+        }
+
+        flavour_group.data('numflavours', fnum);
+        $('#recipe-numflavours').val(flavour_group.data('numflavours'));
+    }
 });

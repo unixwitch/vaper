@@ -64,10 +64,16 @@ def edit(request):
 @require_http_methods(['GET'])
 @view(render_to='json')
 def autocomplete(request):
+    flavours = Flavour.objects.filter(name__icontains=request.GET['query'])
+
+    suggestions = [
+        {
+            "value": "{} ({})".format(f.name, f.manufacturer),
+            "data": f.id,
+        } for f in flavours
+    ]
+
     return {
         'query': request.GET['query'],
-        'suggestions': [
-            "{} ({})".format(f.name, f.manufacturer)
-            for f in Flavour.objects.filter(name__icontains=request.GET['query'])
-        ],
+        'suggestions': suggestions,
     }

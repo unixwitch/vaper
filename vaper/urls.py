@@ -24,14 +24,6 @@ vaper_urlpatterns = [
         vaper.views.flavour.view,
         name='flavour/view'),
 
-    #url(r'^flavour/(?P<id>[0-9]+)/edit/$',
-    #    vaper.views.flavour.edit,
-    #    name='flavour/edit'),
-
-    #url(r'^flavour/(?P<id>[0-9]+)/delete/$',
-    #    vaper.views.flavour.delete,
-    #    name='flavour/delete'),
-
     # UI
     url(r'^ui/flavour/(?P<id>[0-9]+)/edit/$',
         vaper.views.ui.flavour.edit,
@@ -45,12 +37,14 @@ vaper_urlpatterns = [
         vaper.views.ui.recipe.add,
         name='ui/recipe/add'),
 
+    url(r'^ui/recipe/(?P<id>[0-9]+)/edit/$',
+        vaper.views.ui.recipe.edit,
+        name='ui/recipe/edit'),
+
     # API
-    #url(r'^api/flavour/autocomplete/$',
-    #    vaper.views.api.flavour.autocomplete,
-    #    name='api/flavour/autocomplete'),
 
     url(r'^api/flavour/', include(vaper.views.api.flavour)),
+    url(r'^api/recipe/', include(vaper.views.api.recipe)),
 
     url(r'^api/recipe/edit/$',
         vaper.views.api.recipe.edit,
@@ -74,6 +68,5 @@ vaper_urlpatterns = [
 ]
 
 urlpatterns = [
-    url(r'^admin/',     admin.site.urls),
     url(r'', include(vaper_urlpatterns, namespace='vaper')),
 ]

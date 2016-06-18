@@ -76,6 +76,13 @@ function ui_setup_dialog_button(button) {
     });
 }
 
+function ui_on_autocomplete_select(suggestion) {
+    var dataname = $(this).attr('id') + '_data';
+    if (dataname) {
+        $('#' + dataname).val(suggestion.data);
+    }
+}
+
 function ui_setup(elm) {
     for (let dialog of $('a.vui-dialog-button').toArray()) {
         ui_setup_dialog($(dialog));
@@ -88,6 +95,7 @@ function ui_setup(elm) {
     for (let input of $(elm).find('input.vui-autocomplete').toArray()) {
         $(input).autocomplete({
             serviceUrl: $(input).data('vui-autocomplete-uri'),
+            onSelect: ui_on_autocomplete_select,
             autoSelectFirst: true,
             showNoSuggestionNotice: $(input).data('vui-no-suggestion-notice') ? true : false,
             noSuggestionNotice: $(input).data('vui-no-suggestion-notice'),

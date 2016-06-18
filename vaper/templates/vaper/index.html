@@ -11,10 +11,9 @@ access details with anyone else.
 <h2>
   Recipes
   {% if perms.recipe.add_recipe %}
-      <button class='btn btn-primary vui-dialog-open vui-dialog-button' data-vui-dialog='index-dialog-add-recipe'>
-        {% bootstrap_icon 'plus' %}
-      </button>
-    </a>
+    <button class='btn btn-primary vui-dialog-open vui-dialog-button' data-vui-dialog='index-dialog-add-recipe'>
+      {% bootstrap_icon 'plus' %}
+    </button>
   {% endif %}
 </h2>
 
