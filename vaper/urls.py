@@ -29,6 +29,11 @@ vaper_urlpatterns = [
     url(r'^ui/flavour/add/$',
         vaper.views.ui.flavour.add,
         name='ui/flavour/add'),
+
+    url(r'^ui/flavour/(?P<id>[0-9]+)/edit/$',
+        vaper.views.ui.flavour.add,
+        name='ui/flavour/edit'),
+
     url(r'^ui/recipe/', include(vaper.views.ui.recipe)),
 
     # API

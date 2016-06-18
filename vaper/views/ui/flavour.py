@@ -8,15 +8,15 @@ from django import forms
 from django.db import models
 from vaper.models import Flavour, Manufacturer
 
-#@login_required
-#def view(request, id):
-#    flavour = get_object_or_404(Flavour, id=id)
-#    recipes = set([ r.recipes for r in flavour.flavour_instances.all() ])
-#    
-#    return render(request, 'vaper/flavour/view.html', {
-#        'flavour': flavour,
-#        'recipes': recipes,
-#    })
+@login_required
+def view(request, id):
+    flavour = get_object_or_404(Flavour, id=id)
+    recipes = set([ r.recipes for r in flavour.flavour_instances.all() ])
+    
+    return render(request, 'vaper/flavour/view.html', {
+        'flavour': flavour,
+        'recipes': recipes,
+    })
 
 @permission_required('vaper.change_flavour')
 def edit(request, id):
