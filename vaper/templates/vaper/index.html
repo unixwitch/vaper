@@ -36,10 +36,15 @@ access details with anyone else.
   {% endif %}
 </h2>
 
-{% if flavours %}
+{% if manufacturers %}
   <ul>
-    {% for flavour in flavours %}
-      <li><a href="{% url 'vaper:flavour/view' id=flavour.id %}">{{ flavour.name }}</a></li>
+    {% for manufacturer in manufacturers %}
+      <li>{{ manufacturer.name }}</li>
+      <ul>
+        {% for flavour in manufacturer.flavours.all %}
+          <li><a href="{% url 'vaper:flavour/view' id=flavour.id %}">{{ flavour.name }}</a></li>
+        {% endfor %}
+      </ul>
     {% endfor %}
   </ul>
 {% else %}

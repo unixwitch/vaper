@@ -8,12 +8,12 @@ from vaper import models
 
 @login_required
 def index(request):
-    flavours = models.Flavour.objects.all()
+    manufacturers = models.Manufacturer.objects.all()
     recipes  = models.Recipe.objects.all()
 
     return render(request, 'vaper/index.html', {
         'recipes': recipes,
-        'flavours': flavours,
+        'manufacturers': manufacturers,
     })
 
 @login_required
