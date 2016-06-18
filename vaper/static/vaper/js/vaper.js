@@ -123,6 +123,11 @@ function ui_setup(elm) {
                     case 'home':
                         location.href = '/';
                         break;
+                    default:
+                        if (data['location']) {
+                            location.href = data['location'];
+                        }
+                        break;
                     }
                 },
                 error: function(xhr, status, error) {

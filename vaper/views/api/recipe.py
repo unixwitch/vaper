@@ -7,6 +7,7 @@ from django.views.decorators.http import require_http_methods
 from vaper.models import Recipe, Flavour, FlavourInstance
 from django_quicky import routing, view
 from django.shortcuts import get_object_or_404
+from django.core.urlresolvers import reverse
 import json
 
 url, urlpatterns = routing()
@@ -96,4 +97,5 @@ def edit(request):
     return {
         'status': 'success',
         'message': 'Recipe added successfully',
+        'location': reverse('vaper:recipe', args=[recipe.id]),
     }
