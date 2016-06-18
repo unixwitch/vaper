@@ -28,8 +28,10 @@ class Flavour(models.Model):
         related_name = 'flavours',
     )
 
-    ml_remaining = models.PositiveIntegerField(
-        verbose_name = 'Remaining (ml)'
+    ml = models.DecimalField(
+        verbose_name = 'Remaining (ml)',
+        max_digits = 7,
+        decimal_places = 2,
     )
 
     def __str__(self):

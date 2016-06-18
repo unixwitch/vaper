@@ -31,7 +31,7 @@ def add(request):
         'flavour': {
             'name': '',
             'manufacturer': '',
-            'ml_remaining': 10,
+            'ml': 10,
         },
     })
 

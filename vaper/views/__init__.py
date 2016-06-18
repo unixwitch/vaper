@@ -27,7 +27,7 @@ def recipe(request, id):
 @login_required
 def stock(request):
     return render(request, 'vaper/stock.html', {
-        'stock': models.Flavour.objects.all().order_by('ml_remaining')
+        'stock': models.Flavour.objects.all().order_by('ml')
     })
 
 @login_required
@@ -36,7 +36,7 @@ def api_stock_mix(request):
 
     for flavour in data:
         o = models.Flavour.objects.get(id=flavour['id'])
-        o.ml_remaining -= flavour['ml']
+        o.ml -= flavour['ml']
         o.save()
 
     return HttpResponse("okay", content_type='text/plain')

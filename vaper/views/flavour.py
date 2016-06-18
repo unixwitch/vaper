@@ -25,7 +25,7 @@ class FlavourForm(forms.ModelForm):
         model = Flavour
         fields = [
             'name',
-            'ml_remaining',
+            'ml',
         ]
 
 @permission_required('vaper.change_flavour')

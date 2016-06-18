@@ -21,7 +21,7 @@ class FlavourForm(forms.ModelForm):
         model = Flavour
         fields = [
             'name',
-            'ml_remaining',
+            'ml',
         ]
 
 @url('^edit/$', name='api/flavour/edit')
