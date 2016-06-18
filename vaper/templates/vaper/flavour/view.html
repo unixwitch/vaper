@@ -1,3 +1,4 @@
+{# vim:set sw=2 ts=2 et: #}
 {% extends "vaper/base.html" %}
 {% load bootstrap3 %}
 
@@ -14,13 +15,8 @@
   {% if perms.flavour.change_flavour %}
     <a href="#" class='vui-dialog-button'>
 
-      <div  class='vui-dialog dialog-edit-flavour'
-            title='Edit flavour'
-            data-uri="{% url 'vaper:ui/flavour/edit' flavour.id %}" 
-            style='display: none'>
-      </div>
-
-      <button class='btn btn-primary vui-dialog-open'>
+      <button class='btn btn-primary vui-dialog-open vui-dialog-button'
+              data-vui-dialog='flavour-dialog-edit'>
         {% bootstrap_icon 'edit' %}
       </button>
     </a>
@@ -39,5 +35,13 @@
 <li><a href="{% url 'vaper:recipe' recipe.id %}">{{ recipe }}</a></li>
 {% endfor %}
 </ul>
+
+<div  class='vui-dialog dialog-edit-flavour'
+      id='flavour-dialog-edit'
+      title='Edit flavour'
+      data-uri="{% url 'vaper:ui/flavour/edit' flavour.id %}" 
+      data-vui-close='reload'
+      style='display: none'>
+</div>
 
 {% endblock %}
