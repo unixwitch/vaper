@@ -81,7 +81,7 @@
 
     <h2>Ingredients</h2>
 
-    <ul class='flavourlist'>
+    <ul>
       {% for flavour in recipe.flavour_instances.all %}
         <li>
           <a href="{% url 'vaper:flavour/view' flavour.flavour.id %}">{{ flavour.flavour }}</a>{% if user.is_staff %},
