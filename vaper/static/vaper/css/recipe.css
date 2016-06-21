@@ -23,12 +23,7 @@
  * Recipe mixing dialog.
  */
 
-div#mix-dialog {
-    padding: 0 0 0 0;
-    margin: 0 0 0 0;
-}
-
-.mix-dialog-label {
+div#mix-dialog h4 {
     margin-top: 1em;
     margin-bottom: 1em;
     font-weight: bold;
@@ -36,13 +31,18 @@ div#mix-dialog {
     text-align: center;
 }
 
-.mix-dialog-header {
+div#mix-dialog h3 {
     margin: 1em 0 1em 0;
     padding: 3px 0 3px 0;
     border-bottom: dashed 1px #aaa;
     background-color: #f4f4f4;
     font-weight: bold;
-    font-size: 125%;
+    font-size: 115%;
+    text-align: center;
+}
+
+div#mix-dialog h2 {
+    border-bottom: dashed 1px black;
     text-align: center;
 }
 

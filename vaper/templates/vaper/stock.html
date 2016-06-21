@@ -12,7 +12,13 @@
 <table class='table'>
     <tr> <th>Flavour</th> <th>Remaining</th> </tr>
     {% for flavour in stock %}
-        <tr> <td>{{ flavour }}</td> <td><strong>{{ flavour.ml }}</strong> ml</td> </tr>
+        <tr>
+            <td>
+                <a href='{% url 'vaper:flavour/view' flavour.id %}'>{{ flavour.name }}</a>
+                (<a href='{% url 'vaper:manufacturer/view' flavour.manufacturer.id %}'>{{ flavour.manufacturer.name }}</a>)
+            </td>
+            <td><strong>{{ flavour.ml }}</strong> ml</td>
+        </tr>
     {% endfor %}
 </table>
 

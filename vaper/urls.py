@@ -7,43 +7,34 @@ import vaper.views.flavour
 import vaper.views.api
 import vaper.views.ui
 import vaper.views.user
+import vaper.views.manufacturer
+import vaper.views.admin.user
 
 app_name = 'vaper'
 
 vaper_urlpatterns = [
     url(r'^$',                          vaper.views.index, name='index'),
 
+    url(r'^manufacturer/', include(vaper.views.manufacturer)),
+
     # Recipes
     url(r'^recipe/(?P<id>[0-9]+)/$',    vaper.views.recipe, name='recipe'),
 
     # Flavours
-    url(r'^flavour/add/$',
-        vaper.views.flavour.add,
-        name='flavour/add'),
-
     url(r'^flavour/(?P<id>[0-9]+)/$',
         vaper.views.flavour.view,
         name='flavour/view'),
 
+    # Admin
+    url(r'^admin/user/', include(vaper.views.admin.user)),
+
     # UI
-    url(r'^ui/flavour/add/$',
-        vaper.views.ui.flavour.add,
-        name='ui/flavour/add'),
-
-    url(r'^ui/flavour/(?P<id>[0-9]+)/edit/$',
-        vaper.views.ui.flavour.edit,
-        name='ui/flavour/edit'),
-
+    url(r'^ui/flavour', include(vaper.views.ui.flavour)),
     url(r'^ui/recipe/', include(vaper.views.ui.recipe)),
 
     # API
-
     url(r'^api/flavour/', include(vaper.views.api.flavour)),
     url(r'^api/recipe/', include(vaper.views.api.recipe)),
-
-    url(r'^api/recipe/edit/$',
-        vaper.views.api.recipe.edit,
-        name='api/recipe/edit'),
 
     url(r'^api/stock/mix/$',
         vaper.views.api_stock_mix,

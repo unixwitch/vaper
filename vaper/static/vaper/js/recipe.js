@@ -10,18 +10,6 @@ $(document).ready(function() {
   /*
    * Main dialog setup.
    */
-  $("#mix-dialog").dialog({
-    width: 650,
-    autoOpen: false,
-    modal: true,
-    buttons: [
-      {
-        text: "Update stock",
-        click: handle_mix_click,
-      },
-    ],
-  });
-
   $("#stock-dialog").dialog({
     width: 400,
     autoOpen: false,
@@ -40,10 +28,10 @@ $(document).ready(function() {
     ],
   });
 
-  $("#mix-button").on("click", function() {
-    recalculate();
-    $("#mix-dialog").dialog("open");
+  $('button#mix-update-stock').on("click", function(event) {
+      $('#stock-dialog').dialog("open");
   });
+
 
   $("#updating-dialog").dialog({
     width: 400,
@@ -205,13 +193,6 @@ function amount_button_click(event) {
   $('#amount-buttons button').removeClass('btn-primary').addClass('btn-default');
   $(event.target).addClass('btn-primary');
   recalculate();
-}
-
-/*
- * Handle user clicking on 'mix' on the recipe.
- */
-function handle_mix_click(event) {
-  $('#stock-dialog').dialog("open");
 }
 
 function do_update_stock_success(data, status, xhr) {

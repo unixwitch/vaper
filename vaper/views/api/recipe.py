@@ -2,7 +2,7 @@
 
 from django import forms
 from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.views.decorators.http import require_http_methods
 from vaper.models import Recipe, Flavour, FlavourInstance
 from django_quicky import routing, view
@@ -21,7 +21,7 @@ class RecipeForm(forms.ModelForm):
         ]
 
 @url('^delete/$', name='api/recipe/delete')
-@login_required
+@permission_required('vaper.can_delete_recipe')
 @require_http_methods(['POST'])
 @view(render_to='json')
 def delete(request):
@@ -43,7 +43,7 @@ def delete(request):
     }
 
 @url('^edit/$', name='api/recipe/edit')
-@login_required
+@permission_required('vaper.can_change_recipe')
 @require_http_methods(['POST'])
 @view(render_to='json')
 def edit(request):

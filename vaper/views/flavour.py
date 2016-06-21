@@ -50,24 +50,6 @@ def edit(request, id):
         'form':    form,
     })
 
-@permission_required('vaper.add_flavour')
-def add(request):
-
-    if request.method == 'POST':
-        form = FlavourForm(request.POST)
-
-        if form.is_valid():
-            manufacturer, created = Manufacturer.objects.get_or_create(name=form.cleaned_data['manuf'])
-            form.instance.manufacturer = manufacturer
-            form.save()
-            return HttpResponseRedirect(reverse('vaper:flavour/view', args=[form.instance.id]))
-    else:
-        form = FlavourForm()
-
-    return render(request, 'vaper/flavour/add.html', {
-        'form':    form,
-    })
-
-@login_required
+@permission_required('vaper.delete_flavour')
 def delete(request, id):
     pass

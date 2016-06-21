@@ -6,7 +6,11 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect 
 from django import forms
 from django.db import models
+from django_quicky import routing, view
+
 from vaper.models import Flavour, Manufacturer
+
+url, urlpatterns = routing()
 
 @login_required
 def view(request, id):
@@ -18,6 +22,7 @@ def view(request, id):
         'recipes': recipes,
     })
 
+@url('^(?P<id>[0-9]+)/edit/$', name='ui/flavour/edit')
 @permission_required('vaper.change_flavour')
 def edit(request, id):
     flavour = get_object_or_404(Flavour, id=id)
@@ -25,6 +30,7 @@ def edit(request, id):
         'flavour': flavour,
     })
 
+@url('^add/$', name='ui/flavour/add')
 @permission_required('vaper.add_flavour')
 def add(request):
     return render(request, 'vaper/dialog/flavour/edit.html', {
@@ -34,7 +40,3 @@ def add(request):
             'ml': 10,
         },
     })
-
-#@login_required
-#def delete(request, id):
-#    pass

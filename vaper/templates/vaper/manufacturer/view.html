@@ -1,0 +1,24 @@
+{# vim:set sw=2 ts=2 et: #}
+{% extends "vaper/base.html" %}
+
+{% block breadcrumbs %}
+  {{ block.super }}
+  <li>Manufacturer</li>
+  <li class='active'>{{ manufacturer.name }}</li>
+{% endblock %}
+
+{% block content %}
+<h1>{{ manufacturer.name }}</h1>
+
+<h2>Flavours</h2>
+
+<ul>
+{% for flavour in manufacturer.flavours.all %}
+  <li>
+    <a href='{% url 'vaper:flavour/view' flavour.id %}'>{{ flavour.name }}</a>
+    ({{ flavour.ml }} ml)
+  </li>
+{% endfor %}
+</ul>
+
+{% endblock %}
