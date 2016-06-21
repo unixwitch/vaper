@@ -8,14 +8,14 @@ Welcome to Vaper.  <strong>This is a private site</strong>.  Do not share your
 access details with anyone else.
 </p>
 
-<h2>
+<h1>
   Recipes
   {% if perms.recipe.add_recipe %}
     <button class='btn btn-primary vui-dialog-open vui-dialog-button' data-vui-dialog='index-dialog-add-recipe'>
       {% bootstrap_icon 'plus' %}
     </button>
   {% endif %}
-</h2>
+</h1>
 
 {% if recipes %}
   <ul>
@@ -27,17 +27,17 @@ access details with anyone else.
   <p>Sorry, no recipes have been added yet.</p>
 {% endif %}
 
-<h2>
+<h1>
   Flavours
   {% if perms.flavour.add_flavour %}
     <button class='btn btn-primary vui-dialog-button' data-vui-dialog='index-dialog-add-flavour'>
       {% bootstrap_icon 'plus' %}
     </button>
   {% endif %}
-</h2>
+</h1>
 
 {% if manufacturers %}
-  <ul>
+  <ul id='recipelist'>
     {% for manufacturer in manufacturers %}
       {% if manufacturer.flavours.count %}
         <li>{{ manufacturer.name }}</li>
