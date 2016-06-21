@@ -18,7 +18,7 @@ access details with anyone else.
 </h1>
 
 {% if recipes %}
-  <ul>
+  <ul id='recipelist'>
     {% for recipe in recipes %}
       <li><a href="{% url 'vaper:recipe' id=recipe.id %}">{{ recipe.name }}</a></li>
     {% endfor %}
@@ -37,7 +37,7 @@ access details with anyone else.
 </h1>
 
 {% if manufacturers %}
-  <ul id='recipelist'>
+  <ul id='flavourlist'>
     {% for manufacturer in manufacturers %}
       {% if manufacturer.flavours.count %}
         <li>{{ manufacturer.name }}</li>
