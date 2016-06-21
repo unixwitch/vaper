@@ -8,8 +8,8 @@ from vaper import models
 
 @login_required
 def index(request):
-    manufacturers = models.Manufacturer.objects.all()
-    recipes  = models.Recipe.objects.all()
+    manufacturers = models.Manufacturer.objects.all().order_by('name')
+    recipes  = models.Recipe.objects.all().order_by('name')
 
     return render(request, 'vaper/index.html', {
         'recipes': recipes,
