@@ -18,7 +18,7 @@ access details with anyone else.
 </h1>
 
 {% if recipes %}
-  <ul id='recipelist'>
+  <ul class='recipelist'>
     {% for recipe in recipes %}
       <li><a href="{% url 'vaper:recipe' id=recipe.id %}">{{ recipe.name }}</a></li>
     {% endfor %}
@@ -37,18 +37,18 @@ access details with anyone else.
 </h1>
 
 {% if manufacturers %}
-  <ul id='flavourlist'>
     {% for manufacturer in manufacturers %}
       {% if manufacturer.flavours.count %}
-        <li>{{ manufacturer.name }}</li>
-        <ul>
-          {% for flavour in manufacturer.flavours.all %}
-            <li><a href="{% url 'vaper:flavour/view' id=flavour.id %}">{{ flavour.name }}</a></li>
-          {% endfor %}
-        </ul>
+        <div class='manufacturerlist'>
+          <h4>{{ manufacturer.name }}</h4>
+          <ul class='flavourlist'>
+            {% for flavour in manufacturer.flavours.all %}
+              <li><a href="{% url 'vaper:flavour/view' id=flavour.id %}">{{ flavour.name }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
       {% endif %}
     {% endfor %}
-  </ul>
 {% else %}
   <p>Sorry, no flavours have been added yet.</p>
 {% endif %}
