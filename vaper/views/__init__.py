@@ -1,5 +1,6 @@
 # vim:sw=4 ts=4 et:
 
+from decimal import Decimal
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -36,7 +37,7 @@ def api_stock_mix(request):
 
     for flavour in data:
         o = models.Flavour.objects.get(id=flavour['id'])
-        o.ml -= flavour['ml']
+        o.ml -= Decimal(flavour['ml'])
         o.save()
 
     return HttpResponse("okay", content_type='text/plain')
