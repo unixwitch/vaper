@@ -37,10 +37,10 @@ access details with anyone else.
 </h1>
 
 {% if manufacturers %}
-    {% for manufacturer, flavours in flavours_by_manuf.items %}
+    {% for manufacturer, flavours in flavours_by_manuf %}
       {% if flavours|length > 0 %}
         <div class='manufacturerlist'>
-          <h4>{{ manufacturer }}</h4>
+          <h4>{{ manufacturer.name }}</h4>
           <ul class='flavourlist'>
             {% for flavour in flavours %}
               <li><a href="{% url 'vaper:flavour/view' id=flavour.id %}">{{ flavour.name }}</a></li>
