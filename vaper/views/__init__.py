@@ -12,9 +12,15 @@ def index(request):
     manufacturers = models.Manufacturer.objects.all().order_by('name')
     recipes  = models.Recipe.objects.all().order_by('name')
 
+    flavours_by_manuf = {}
+    for manuf in manufacturers:
+        flavours_by_manuf[manuf.name] = manuf.flavours.all().order_by('name')
+    print flavours_by_manuf
+
     return render(request, 'vaper/index.html', {
         'recipes': recipes,
         'manufacturers': manufacturers,
+        'flavours_by_manuf': flavours_by_manuf
     })
 
 @login_required
