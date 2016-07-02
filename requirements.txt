@@ -6,4 +6,5 @@ django-compressor==2.0
 psycopg2==2.6.1
 simplejson==3.8.2
 django-datetime-widget
+django-widget-tweaks
 git+https://github.com/ftarnell/django-quicky.git
