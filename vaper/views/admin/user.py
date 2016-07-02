@@ -2,7 +2,7 @@
 
 from django_quicky import routing, view
 from django.contrib.auth.models import User
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django import forms
 from vaper.decorators import superuser_required
 
@@ -43,3 +43,34 @@ def edit(request, id):
             'form': form,
         })
 
+class PasswordForm(forms.Form):
+    newpass = forms.CharField(
+        label='New password',
+        widget=forms.PasswordInput())
+
+    cnfpass = forms.CharField(
+        label='Confirm new password',
+        widget=forms.PasswordInput())
+
+    def clean(self):
+        cleaned_data = super(PasswordForm, self).clean()
+        if cleaned_data.get('newpass') != cleaned_data.get('cnfpass'):
+            raise forms.ValidationError({ 'cnfpass': "New passwords didn't match" })
+
+@url('^password/(?P<id>[0-9]+)/$', name='admin/user/password')
+@superuser_required
+def password(request, id):
+    user = get_object_or_404(User, id=id)
+
+    if request.method == 'POST':
+        form = PasswordForm(request.POST)
+        if form.is_valid():
+            user.password = form.cleaned_data['newpass']
+            return redirect('vaper:admin/user/edit', id=user.id)
+    else:
+        form = PasswordForm()
+
+    return render(request, 'vaper/admin/user/password.html', {
+            'form': form,
+            'instance': user,
+        })

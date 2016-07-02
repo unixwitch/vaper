@@ -14,13 +14,19 @@ Edit user
 {% endblock %}
 
 {% block content %}
-<form action='{% url 'vaper:admin/user/edit' id=form.instance.id %}' method='post'>
-{% csrf_token %}
-{% bootstrap_form form %}
+  <form action='{% url 'vaper:admin/user/edit' id=form.instance.id %}' method='post'>
+    {% csrf_token %}
+    {% bootstrap_form form %}
 
-<button type='submit' class='btn btn-primary'>
-  {% bootstrap_icon 'save' %} Save
-</button>
+    <button type='submit' class='btn btn-primary'>
+      {% bootstrap_icon 'save' %} Save
+    </button>
+    
+    <a href='{% url 'vaper:admin/user/password' id=form.instance.id %}'>
+      <button type='button' class='btn btn-default'>
+        Change password...
+      </button>
+    </a>
 
-</form>
+  </form>
 {% endblock %}
