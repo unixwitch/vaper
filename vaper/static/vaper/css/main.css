@@ -40,10 +40,6 @@ body, .ui-widget {
   font-family: "Open Sans";
 }
 
-.navbar {
-  z-index: 1;
-}
-
 table caption {
   text-align: center;
   font-weight: bold;
