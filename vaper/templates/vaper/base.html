@@ -42,7 +42,7 @@
   {% endcompress %}
 
   <script type='text/javascript'>
-    var csrf_token = "{% csrf_token %}";
+    var csrf_token = "{{ csrf_token }}";
     document.base_url = '/';
   </script>
 
@@ -55,7 +55,7 @@
 <div class='container'>
 
 <!-- navbar -->
-<div class='navbar navbar-default'>
+<nav class='navbar navbar-default'>
   <div class='container-fluid'>
     <div class='navbar-header'>
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -111,7 +111,7 @@
       {% endif %}
     </div>
   </div>
-</div>
+</nav>
 
   <div class="content">
     <ul class="breadcrumb">
