@@ -11,7 +11,6 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'vaper',
 
-    'bootstrap_admin',
     'datetimewidget',
     'widget_tweaks',
 
