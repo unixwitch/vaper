@@ -1,0 +1,24 @@
+{% extends "vaper/base.html" %}{# vim:set sw=2 ts=2 et: #}
+
+{% block content %}
+<table class='table users'>
+  <tr>
+    <th>Username</th>
+    <th>Name</th>
+    <th>E-mail address</th>
+  </tr>
+
+  {% for user in users %}
+    <tr>
+      <td>
+        <a href='{% url 'vaper:admin/user/edit' user.id %}'>
+          {{ user.username }}
+        </a>
+      </td>
+
+      <td>{{ user.first_name }} {{ user.last_name }}</td>
+      <td>{{ user.email }}</td>
+    </tr>
+  {% endfor %}
+</table>
+{% endblock %}
