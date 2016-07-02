@@ -3,6 +3,24 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+# from https://goodcode.io/articles/django-singleton-models/
+class SingletonModel(models.Model):
+    class Meta:
+        abstract = True
+
+    def save(self, *args, **kwargs):
+        self.__class__.objects.exclude(id=self.id).delete()
+        super(SingletonModel, self).save(*args, **kwargs)
+
+    @classmethod
+    def load(cls):
+        try:
+            return cls.objects.get()
+        except cls.DoesNotExist:
+            o = cls()
+            o.save()
+            return o
+
 ###
 ### FLAVOUR
 ###
@@ -93,3 +111,30 @@ class FlavourInstance(models.Model):
 
     def __str__(self):
         return "{}, {}%".format(self.flavour, self.strength)
+
+###
+### BILLING
+###
+#
+# A ledger entry.
+#
+
+class Ledger(SingletonModel):
+    balance = models.DecimalField(
+        default = 0,
+        decimal_places = 2,
+        max_digits = 7)
+
+class LedgerEntry(models.Model):
+    description = models.CharField(max_length=256)
+    amount = models.DecimalField(
+        decimal_places = 2,
+        max_digits = 7)
+    date = models.DateField()
+
+    ledger = models.ForeignKey(
+        Ledger,
+        on_delete = models.CASCADE,
+        related_name = 'entries',
+    )
+

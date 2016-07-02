@@ -1,0 +1,48 @@
+{# vim:set sw=2 ts=2 et: #}
+{% extends "vaper/base.html" %}
+{% load bootstrap3 %}
+
+{% block title %}
+Billing
+{% endblock %}
+
+{% block content %}
+<p>
+  <a href='{% url 'vaper:ledger/add' %}'>
+    <button class='btn btn-primary'>
+      {% bootstrap_icon 'plus' %} New entry
+    </button>
+  </a>
+</p>
+
+<p>
+  <strong>
+    Current balance:
+  </strong>
+  £{{ ledger.balance }}
+</p>
+
+<table class='table ledger'>
+
+  <tr>
+    <th>Date</th>
+    <th>Description</th>
+    <th>Amount</th>
+  </tr>
+
+  {% for entry in entries %}
+  <tr
+    {% if entry.amount >= 0 %}
+      class='credit'
+    {% else %}
+      class='debit'
+    {% endif %}>
+    <td>{{ entry.date }}</td>
+    <td>{{ entry.description }}</td>
+    <td>£{{ entry.amount }}</td>
+  </tr>
+  {% endfor %}
+
+</table>
+
+{% endblock %}

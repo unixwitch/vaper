@@ -104,3 +104,14 @@ ul.flavourlist {
   -moz-column-count: 3;
   column-count: 3;
 }
+
+/*
+ * Ledger
+ */
+table.ledger tr.credit {
+  color: #44aa44;
+}
+
+table.ledger tr.debit {
+  color: #aa4444;
+}

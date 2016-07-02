@@ -66,8 +66,9 @@
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class='nav navbar-nav'>
-        {% if user.is_superuser %}
+        {% if user.is_staff %}
           <li><a href="{% url 'vaper:stock' %}">Stock</a></li>
+          <li><a href="{% url 'vaper:ledger' %}">Ledger</a></li>
         {% endif %}
       </ul>
 

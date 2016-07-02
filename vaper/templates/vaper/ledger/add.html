@@ -1,0 +1,27 @@
+{# vim:set sw=2 ts=2 et: #}
+{% extends "vaper/base.html" %}
+{% load bootstrap3 %}
+
+{% block head %}
+{{ form.media }}
+{% endblock %}
+
+{% block title %}
+Billing
+{% endblock %}
+
+{% block content %}
+<form method='POST' action='{% url 'vaper:ledger/add' %}'>
+{% csrf_token %}
+
+{% bootstrap_form form %}
+
+<p>
+  <button type='submit' class='btn btn-primary'>
+    {% bootstrap_icon 'plus' %} Add
+  </button>
+</p>
+
+</form>
+
+{% endblock %}

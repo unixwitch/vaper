@@ -8,6 +8,7 @@ import vaper.views.api
 import vaper.views.ui
 import vaper.views.user
 import vaper.views.manufacturer
+import vaper.views.ledger
 import vaper.views.admin.user
 
 app_name = 'vaper'
@@ -24,6 +25,9 @@ vaper_urlpatterns = [
     url(r'^flavour/(?P<id>[0-9]+)/$',
         vaper.views.flavour.view,
         name='flavour/view'),
+
+    # Ledger
+    url(r'^ledger/', include(vaper.views.ledger)),
 
     # Admin
     url(r'^admin/user/', include(vaper.views.admin.user)),
