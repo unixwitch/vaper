@@ -11,23 +11,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+  <link rel='stylesheet' href="{% static 'vaper/css/bootstrap.min.css' %}">
+  <link rel='stylesheet' href="{% static 'vaper/css/bootstrap-theme.min.css' %}">
+  <link rel='stylesheet' href="{% static 'vaper/css/jquery-ui.min.css' %}">
+  <link rel='stylesheet' href="{% static 'vaper/css/jquery-ui.theme.min.css' %}">
+
   {% compress css %}
-    <link rel='stylesheet' href="{% static 'vaper/css/bootstrap.min.css' %}">
-    <link rel='stylesheet' href="{% static 'vaper/css/bootstrap-theme.min.css' %}">
-    <link rel='stylesheet' href="{% static 'vaper/css/jquery-ui.min.css' %}">
-    <link rel='stylesheet' href="{% static 'vaper/css/jquery-ui.theme.min.css' %}">
     <link rel='stylesheet' href="{% static 'vaper/css/main.css' %}">
     <link rel='stylesheet' href="{% static 'vaper/css/flavour.css' %}">
   {% endcompress %}
 
   <!--[if lt IE 9]>
-    {% compress js %}
     <script src="{% static 'vaper/js/html5shiv.min.js' %}"></script>
     <script src="{% static 'vaper/js/respond.min.js' %}"></script>
-    {% endcompress %}
   <![endif]-->
 
-  {% compress js %}
   <!-- Vendor JS -->
   <script src="{% static 'vaper/js/jquery.js' %}"></script>
   <script src="{% static 'vaper/js/bootstrap.min.js' %}"></script>
@@ -36,6 +34,7 @@
   <script src="{% static 'vaper/js/jquery.autocomplete.js' %}"></script>
 
   <!-- Vaper JS -->
+  {% compress js %}
   <script src='{% static 'vaper/js/vaper.js' %}'></script>
   <script src='{% static 'vaper/js/flavour.js' %}'></script>
   <script src='{% static 'vaper/js/recipe.js' %}'></script>
