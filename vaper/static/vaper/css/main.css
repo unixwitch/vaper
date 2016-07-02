@@ -36,10 +36,6 @@
         url('../fonts/opensans-extrabold.ttf') format("truetype");
 }
 
-body {
-  padding-top: 6em;
-}
-
 body, .ui-widget {
   font-family: "Open Sans";
 }
