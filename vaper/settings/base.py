@@ -10,14 +10,18 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'vaper',
+
     'bootstrap_admin',
     'datetimewidget',
+    'widget_tweaks',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'compressor',
     'bootstrap3',
 ]

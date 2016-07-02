@@ -1,0 +1,108 @@
+{# vim:set sw=2 ts=2 et: #}
+{% load compress %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Log in | Vaper</title>
+    {% compress css %}
+      <link rel='stylesheet' href="{% static 'vaper/css/bootstrap.min.css' %}">
+      <link rel='stylesheet' href="{% static 'vaper/css/bootstrap-theme.min.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static "vaper/css/login.css" %}" />
+    {% endcompress %}
+
+    <!--[if lt IE 9]>
+      {% compress js %}
+      <script src="{% static 'vaper/js/html5shiv.min.js' %}"></script>
+      <script src="{% static 'vaper/js/respond.min.js' %}"></script>
+      {% endcompress %}
+    <![endif]-->
+
+    {% compress js %}
+    <!-- Vendor JS -->
+    <script src="{% static 'vaper/js/jquery.js' %}"></script>
+    <script src="{% static 'vaper/js/bootstrap.min.js' %}"></script>
+    {% endcompress %}
+  </head>
+
+  <body>
+    <div id="content-main">
+      <div class="login-container">
+        <form action="{{ app_path }}" method="post" id="login-form" class="form form-horizontal" role="form">{% csrf_token %}
+          <fieldset>
+            <legend>
+              Vaper - log in
+            </legend>
+
+            {% if form.errors or form.non_field_errors %}
+              <div role="alert" class="alert alert-danger errornote">
+                {% if form.non_field_errors %}
+                  {% for error in form.non_field_errors %}
+                    <p>
+                      {{ error }}
+                    </p>
+                  {% endfor %}
+                {% endif %}
+
+                {% if form.errors %}
+                  {% for field in form %}
+                    {% for error in field.errors %}
+                      <p class="border-decoration">
+                        {{ error|escape }}
+                      </p>
+                    {% endfor %}
+                  {% endfor %}
+                {% endif %}
+              </div>
+            {% endif %}
+
+            <div class="row form-row">
+              <div class="col-sm-6 username">
+                <div class="input-group {% if form.username.errors %}has-error{% endif %}">
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-user"></span>
+                  </span>
+                  {% render_field form.username class+='form-control' placeholder=form.username.label %}
+                </div><!-- /input-group -->
+              </div><!-- /.col-sm-6 -->
+              <div class="col-sm-6 password">
+                <div class="input-group {% if form.password.errors %}has-error{% endif %}">
+                  <span class="input-group-addon toggle-password">
+                    <span class="glyphicon glyphicon-eye-open"></span>
+                  </span>
+                  {% render_field form.password class+='form-control' placeholder=form.password.label %}
+                  <span class="input-group-btn">
+                    <button type="submit" class="btn btn-primary">Log in</button>
+                  </span>
+                </div><!-- /input-group -->
+              </div><!-- /.col-sm-6 -->
+            </div>
+
+            <input type="hidden" name="next" value="{{ next }}" />
+          </fieldset>
+        </form>
+      </div>
+
+      <script type="text/javascript">
+        document.getElementById('id_username').focus();
+        (function ($) {
+          $(document).ready(function(){
+            $('.toggle-password').on('click', function() {
+              $span = $(this).find('span');
+              if ($span.hasClass('glyphicon-eye-open')) {
+                $span.removeClass('glyphicon-eye-open').addClass('glyphicon-eye-close');
+                $('#id_password').prop('type', 'text');
+              } else {
+                $span.removeClass('glyphicon-eye-close').addClass('glyphicon-eye-open');
+                $('#id_password').prop('type', 'password');
+              }
+            });
+          });
+        })($);
+      </script>
+    </div>
+  </body>
+</html>

@@ -2,8 +2,9 @@
 from django import forms
 from django.contrib.auth.models import User
 from django_quicky import routing, view
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 
 url, urlpatterns = routing()
 
@@ -58,3 +59,27 @@ def password(request):
     return render(request, 'vaper/user/password.html', {
             'password_form': form,
         })
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=64)
+    password = forms.CharField(max_length=64, widget=forms.PasswordInput())
+
+@url('^login/$', name='user/login')
+def user_login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user = authenticate(
+                    username = form.cleaned_data['username'],
+                    password = form.cleaned_data['password'])
+            if user is not None and user.is_active:
+                login(request, user)
+                return redirect('vaper:index')
+            else:
+                form.add_error('password', 'Invalid password')
+    else:
+        form = LoginForm()
+
+    return render(request, 'vaper/user/login.html', {
+        'form': form,
+    })
