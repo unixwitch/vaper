@@ -37,7 +37,7 @@ Billing
     {% else %}
       class='debit'
     {% endif %}>
-    <td>{{ entry.date }}</td>
+    <td>{{ entry.date|date:"Y-m-d" }}</td>
     <td>{{ entry.description }}</td>
     <td>£{{ entry.amount }}</td>
   </tr>

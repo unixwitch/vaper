@@ -34,6 +34,7 @@ class AddLedgerForm(forms.ModelForm):
                             'id': 'datewidget',
                         },
                         options = {
+                            'format': 'yyyy-mm-dd',
                             'todayBtn': 'true',
                             'todayHighlight': 'true',
                         }
